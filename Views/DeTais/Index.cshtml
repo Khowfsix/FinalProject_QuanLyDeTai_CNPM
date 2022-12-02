@@ -1,0 +1,94 @@
+﻿@model IEnumerable<QuanLyDeTai.Models.DeTai>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Thêm đề tài mới", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Số thứ tự")
+        </th>
+        <th>
+            @Html.DisplayName("Tên đề tài")
+        </th>
+        <th>
+            @Html.DisplayName("Tình trạng")
+        </th>
+        <th>
+            @Html.DisplayName("Số lượng")
+        </th>
+        <th>
+            @Html.DisplayName("Chuyên ngành")
+        </th>
+        <th>
+            @Html.DisplayName("Giảng viên hướng dẫn")
+        </th>
+        <th>
+            @Html.DisplayName("Hành động")
+        </th>
+    </tr>
+    @{ int i = 0;}
+    @foreach (var item in Model) {
+        i = i +1;
+<tr>
+    <td>
+        @i
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.tenDeTai)
+    </td>
+    <td>
+        @{
+            if (item.truongNhom != null)
+            {
+                <span>Đã có người đăng ký</span>
+            }
+            else
+            {
+                <span>Chưa có người đăng ký</span>
+            }
+        }
+    </td>
+    <td>
+        <a>@item.Nhoms.Count</a>
+        /
+        <a>@item.soLuongSinhVienToiDa</a>
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ChuyenNganh.tenChuyenNganh)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.gvHuongDan)
+    </td>
+    <td>
+        @*@Html.ActionLink("Details", "Details", new { id = item.maDeTai })
+                @if (User.IsInRole("SinhVien"))
+                {
+                    @Html.ActionLink("DangKyDeTai", "Edit", new { id = item.maDeTai })
+                }
+                else if (User.IsInRole("GiangVien"))
+                {
+
+                }
+                else if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.maDeTai }) |
+        @Html.ActionLink("Details", "Details", new { id = item.maDeTai }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.maDeTai })
+                }*@
+
+        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.maDeTai }) |
+        @Html.ActionLink("Chi tiết", "Details", new { id = item.maDeTai }) |
+        @Html.ActionLink("Xóa", "Delete", new { id = item.maDeTai })
+
+    </td>
+</tr>
+}
+
+</table>

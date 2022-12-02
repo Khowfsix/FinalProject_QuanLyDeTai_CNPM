@@ -1,0 +1,50 @@
+﻿@model QuanLyDeTai.Models.LoaiDeTai
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Xóa</h2>
+
+<h3>Bạn có muốn xóa loại đề tài này?</h3>
+<div>
+    <h4>Loại đề tài</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Tên loại đề tài")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenLoaiDeTai)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Niên khóa")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nienKhoa)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Học kỳ")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hocKy)
+        </dd>
+
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default" /> |
+            @Html.ActionLink("Quay lại danh sách", "Index")
+        </div>
+    }
+</div>

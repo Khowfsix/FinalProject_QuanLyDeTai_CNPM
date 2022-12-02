@@ -1,0 +1,44 @@
+﻿@model QuanLyDeTai.Models.LoaiDeTai
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết</h2>
+
+<div>
+    <h4>Loại đề tài</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Tên loại đề tài")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenLoaiDeTai)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Niên khóa")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nienKhoa)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Học kỳ")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hocKy)
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.maLoaiDeTai }) |
+    @Html.ActionLink("Quay lại danh sách", "Index")
+</p>

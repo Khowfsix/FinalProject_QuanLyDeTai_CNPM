@@ -1,0 +1,35 @@
+﻿@model QuanLyDeTai.Models.ChuyenNganh
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết chuyên ngành</h2>
+
+<div>
+    <h4>Chuyên ngành</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Tên chuyên ngành")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenChuyenNganh)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Trưởng bộ môn")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GiangVien.tenGiangVien)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.maChuyenNganh }) |
+    @Html.ActionLink("Quay lại danh sách", "Index")
+</p>

@@ -1,0 +1,135 @@
+﻿@model QuanLyDeTai.Models.DeTai
+
+@{
+    ViewBag.Title = "Xóa đề tài";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Bạn có chắc muốn xóa đề tài này?</h3>
+<div>
+    <h4>Đề tài</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Tên đề tài")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenDeTai)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Mục tiêu")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mucTieu)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Yêu cầu")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.yeuCau)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Sản phẩm")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sanPham)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Chú thích")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.chuThich)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Số lượng sinh viên đăng ký tối đa")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.soLuongSinhVienToiDa)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Được đăng ký khách chuyên ngành")
+        </dt>
+
+        <dd>
+            @(Model.duocDangKyKhacChuyenNganh == true ? "Có" : "Không")
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Niên khóa")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nienKhoa)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Điểm")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.diem)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("MSSV trưởng nhóm")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.truongNhom)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Mã giảng viên hướng dẫn")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gvHuongDan)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Loại đề tài")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaiDeTai1.tenLoaiDeTai)
+        </dd>
+        <dt>
+            @Html.DisplayName("Trạng thái")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Chuyên ngành")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChuyenNganh.tenChuyenNganh)
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default" /> |
+            @Html.ActionLink("Quay về danh sách đề tài", "Index", new { id = Model.loaiDeTai })
+        </div>
+    }
+</div>

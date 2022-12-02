@@ -1,0 +1,35 @@
+﻿@model IEnumerable<QuanLyDeTai.Models.LoaiDeTai>
+
+@{
+    ViewBag.Title = "ChonLoaiDeTai";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ChonLoaiDeTai</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Số thứ tự")
+        </th>
+        <th>
+            @Html.DisplayName("Tên loại đề tài")
+        </th>
+    </tr>
+@{int i = 0;}
+@foreach (var item in Model) {
+    i = i + 1;
+<tr>
+    <td>
+        @i
+    </td>
+    <td>
+        @Html.ActionLink(item.tenLoaiDeTai, "Index", "Detais",  new { id=item.maLoaiDeTai }, null)
+    </td>
+</tr>
+}
+
+</table>

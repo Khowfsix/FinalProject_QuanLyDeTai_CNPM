@@ -1,0 +1,41 @@
+﻿@model QuanLyDeTai.Models.ChuyenNganh
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Xóa</h2>
+
+<h3>Bạn có chắc chắn xóa chuyên ngành này?</h3>
+<div>
+    <h4>Chuyên ngành</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Tên chuyên ngành")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenChuyenNganh)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Trưởng bộ môn")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GiangVien.tenGiangVien)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default" /> |
+            @Html.ActionLink("Quay lại danh sách", "Index")
+        </div>
+    }
+</div>
