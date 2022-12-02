@@ -158,15 +158,17 @@
     <NavigationProperty Name="AspNetUser" Relationship="Self.fk_accountStudent" FromRole="SinhVien" ToRole="AspNetUsers" />
     <NavigationProperty Name="ChuyenNganh" Relationship="Self.fk_sinhVien_chuyenNganh" FromRole="SinhVien" ToRole="ChuyenNganh" />
   </EntityType>
-  <EntityType Name="sysdiagram">
+  <EntityType Name="ThongBao">
     <Key>
-      <PropertyRef Name="diagram_id" />
+      <PropertyRef Name="maThongBao" />
     </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="maThongBao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tieuDe" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="moTa" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="noiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="trangThai" Type="Byte" />
+    <Property Name="ngayTao" Type="DateTime" Precision="3" />
+    <Property Name="fileDinhKem" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -312,7 +314,7 @@
     <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="*" />
     <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="*" />
   </Association>
-  <EntityContainer Name="QuanLyDeTaiEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="QuanLyDeTaiEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
@@ -326,7 +328,7 @@
     <EntitySet Name="LoaiDeTais" EntityType="Self.LoaiDeTai" />
     <EntitySet Name="Nhoms" EntityType="Self.Nhom" />
     <EntitySet Name="SinhViens" EntityType="Self.SinhVien" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="ThongBaos" EntityType="Self.ThongBao" />
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />

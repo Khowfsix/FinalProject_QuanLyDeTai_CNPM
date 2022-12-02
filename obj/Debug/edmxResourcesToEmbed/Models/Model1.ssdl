@@ -148,15 +148,17 @@
     <Property Name="tenSinhVien" Type="nvarchar" MaxLength="256" />
     <Property Name="maChuyenNganh" Type="int" />
   </EntityType>
-  <EntityType Name="sysdiagrams">
+  <EntityType Name="ThongBao">
     <Key>
-      <PropertyRef Name="diagram_id" />
+      <PropertyRef Name="maThongBao" />
     </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
+    <Property Name="maThongBao" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tieuDe" Type="nvarchar" MaxLength="255" />
+    <Property Name="moTa" Type="nvarchar" MaxLength="255" />
+    <Property Name="noiDung" Type="text" />
+    <Property Name="trangThai" Type="tinyint" />
+    <Property Name="ngayTao" Type="datetime" />
+    <Property Name="fileDinhKem" Type="varchar" MaxLength="255" />
   </EntityType>
   <Association Name="fk_accountStudent">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
@@ -374,7 +376,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
     <EntitySet Name="LoaiDeTaiChuyenNganh" EntityType="Self.LoaiDeTaiChuyenNganh" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Nhom" EntityType="Self.Nhom" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SinhVien" EntityType="Self.SinhVien" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ThongBao" EntityType="Self.ThongBao" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="fk_accountStudent" Association="Self.fk_accountStudent">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="SinhVien" EntitySet="SinhVien" />
