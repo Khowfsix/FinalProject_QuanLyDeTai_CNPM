@@ -17,9 +17,9 @@ namespace QuanLyDeTai.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ChuyenNganh()
         {
-            this.LoaiDeTais = new HashSet<LoaiDeTai>();
+            this.DeTais = new HashSet<DeTai>();
+            this.GiangVienChuyenNganhs = new HashSet<GiangVienChuyenNganh>();
             this.SinhViens = new HashSet<SinhVien>();
-            this.LoaiDeTais1 = new HashSet<LoaiDeTai>();
         }
     
         public int maChuyenNganh { get; set; }
@@ -27,11 +27,11 @@ namespace QuanLyDeTai.Models
         public string truongBoMon { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LoaiDeTai> LoaiDeTais { get; set; }
+        public virtual ICollection<DeTai> DeTais { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GiangVienChuyenNganh> GiangVienChuyenNganhs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SinhVien> SinhViens { get; set; }
         public virtual GiangVien GiangVien { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LoaiDeTai> LoaiDeTais1 { get; set; }
     }
 }

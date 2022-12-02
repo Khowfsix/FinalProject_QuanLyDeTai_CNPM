@@ -8,15 +8,15 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Thêm chuyên ngành", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.tenChuyenNganh)
+            @Html.DisplayName("Tên chuyên ngành")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.GiangVien.tenGiangVien)
+            @Html.DisplayName("Tên trưởng bộ môn")
         </th>
         <th></th>
     </tr>
@@ -30,9 +30,9 @@
             @Html.DisplayFor(modelItem => item.GiangVien.tenGiangVien)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.maChuyenNganh }) |
-            @Html.ActionLink("Details", "Details", new { id=item.maChuyenNganh }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.maChuyenNganh })
+            @Html.ActionLink("Sửa", "Edit", new { id=item.maChuyenNganh }) |
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.maChuyenNganh }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.maChuyenNganh })
         </td>
     </tr>
 }

@@ -17,10 +17,14 @@ namespace QuanLyDeTai.Controllers
         // GET: LoaiDeTais
         public ActionResult Index()
         {
-            var loaiDeTais = db.LoaiDeTais.Include(l => l.ChuyenNganh);
+            var loaiDeTais = db.LoaiDeTais;
             return View(loaiDeTais.ToList());
         }
-
+        public ActionResult ChonLoaiDeTai()
+        {
+            var loaiDeTais = db.LoaiDeTais.Select(p => p);
+            return View(loaiDeTais.ToList());
+        }
         // GET: LoaiDeTais/Details/5
         public ActionResult Details(int? id)
         {
@@ -57,7 +61,7 @@ namespace QuanLyDeTai.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.maChuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh", loaiDeTai.maChuyenNganh);
+            ViewBag.maChuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh");
             return View(loaiDeTai);
         }
 
@@ -73,7 +77,7 @@ namespace QuanLyDeTai.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.maChuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh", loaiDeTai.maChuyenNganh);
+            ViewBag.maChuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh");
             return View(loaiDeTai);
         }
 
@@ -90,7 +94,7 @@ namespace QuanLyDeTai.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.maChuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh", loaiDeTai.maChuyenNganh);
+            ViewBag.maChuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh");
             return View(loaiDeTai);
         }
 

@@ -14,12 +14,20 @@ namespace QuanLyDeTai.Controllers
     {
         private QuanLyDeTaiEntities db = new QuanLyDeTaiEntities();
 
-        // GET: DeTais
-        public ActionResult Index()
+        //GET: DeTais
+        //public ActionResult Index()
+        //{
+        //    var deTais = db.DeTais.Include(d => d.LoaiDeTai1);
+
+        //    return View(deTais.ToList());
+        //}
+        public ActionResult Index(int? id)
         {
-            var deTais = db.DeTais.Include(d => d.LoaiDeTai1);
+            var deTais = (id == null) ? db.DeTais.Include(d => d.LoaiDeTai1) : db.DeTais.Include(d => d.LoaiDeTai1).Where(p => p.loaiDeTai == id);
+            
             return View(deTais.ToList());
         }
+       
 
         // GET: DeTais/Details/5
         public ActionResult Details(int? id)
@@ -40,6 +48,7 @@ namespace QuanLyDeTai.Controllers
         public ActionResult Create()
         {
             ViewBag.loaiDeTai = new SelectList(db.LoaiDeTais, "maLoaiDeTai", "tenLoaiDeTai");
+            ViewBag.chuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh");
             return View();
         }
 
@@ -48,7 +57,7 @@ namespace QuanLyDeTai.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "maDeTai,tenDeTai,mucTieu,yeuCau,sanPham,chuThich,soLuongSinhVienToiDa,duocDangKyKhacChuyenNganh,nienKhoa,loaiDeTai,diem,truongNhom,gvHuongDan")] DeTai deTai)
+        public ActionResult Create([Bind(Include = "maDeTai,tenDeTai,mucTieu,yeuCau,sanPham,chuThich,soLuongSinhVienToiDa,duocDangKyKhacChuyenNganh,nienKhoa,loaiDeTai,diem,truongNhom,gvHuongDan,trangThai,chuyenNganh")] DeTai deTai)
         {
             if (ModelState.IsValid)
             {
@@ -58,6 +67,7 @@ namespace QuanLyDeTai.Controllers
             }
 
             ViewBag.loaiDeTai = new SelectList(db.LoaiDeTais, "maLoaiDeTai", "tenLoaiDeTai", deTai.loaiDeTai);
+            ViewBag.chuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh", deTai.maChuyenNganh);
             return View(deTai);
         }
 
@@ -74,6 +84,7 @@ namespace QuanLyDeTai.Controllers
                 return HttpNotFound();
             }
             ViewBag.loaiDeTai = new SelectList(db.LoaiDeTais, "maLoaiDeTai", "tenLoaiDeTai", deTai.loaiDeTai);
+            ViewBag.chuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh", deTai.maChuyenNganh);
             return View(deTai);
         }
 
@@ -82,7 +93,7 @@ namespace QuanLyDeTai.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "maDeTai,tenDeTai,mucTieu,yeuCau,sanPham,chuThich,soLuongSinhVienToiDa,duocDangKyKhacChuyenNganh,nienKhoa,loaiDeTai,diem,truongNhom,gvHuongDan")] DeTai deTai)
+        public ActionResult Edit([Bind(Include = "maDeTai,tenDeTai,mucTieu,yeuCau,sanPham,chuThich,soLuongSinhVienToiDa,duocDangKyKhacChuyenNganh,nienKhoa,loaiDeTai,diem,truongNhom,gvHuongDan,trangThai,chuyenNganh")] DeTai deTai)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +102,8 @@ namespace QuanLyDeTai.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.loaiDeTai = new SelectList(db.LoaiDeTais, "maLoaiDeTai", "tenLoaiDeTai", deTai.loaiDeTai);
+            ViewBag.chuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh", deTai.maChuyenNganh); 
+            
             return View(deTai);
         }
 
