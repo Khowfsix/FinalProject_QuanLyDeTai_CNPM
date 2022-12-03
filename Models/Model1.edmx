@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QuanLyDeTaiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="QuanLyDeTai2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -153,15 +153,18 @@
           <Property Name="tenSinhVien" Type="nvarchar" MaxLength="256" />
           <Property Name="maChuyenNganh" Type="int" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="ThongBao">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="maThongBao" />
           </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
+          <Property Name="maThongBao" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tieuDe" Type="nvarchar" MaxLength="255" />
+          <Property Name="moTa" Type="nvarchar" MaxLength="255" />
+          <Property Name="noiDung" Type="text" />
+          <Property Name="trangThai" Type="tinyint" />
+          <Property Name="ngayTao" Type="datetime" />
+          <Property Name="fileDinhKem" Type="varchar" MaxLength="255" />
+          <Property Name="maLoaiDeTai" Type="int" />
         </EntityType>
         <Association Name="fk_accountStudent">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
@@ -351,6 +354,18 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_ThongBao_LoaiDeTai">
+          <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="0..1" />
+          <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoaiDeTai">
+              <PropertyRef Name="maLoaiDeTai" />
+            </Principal>
+            <Dependent Role="ThongBao">
+              <PropertyRef Name="maLoaiDeTai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_truongBoMon">
           <End Role="GiangVien" Type="Self.GiangVien" Multiplicity="0..1" />
           <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="*" />
@@ -363,7 +378,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="QuanLyDeTaiModelStoreContainer">
+        <EntityContainer Name="QuanLyDeTai2ModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -379,7 +394,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <EntitySet Name="LoaiDeTaiChuyenNganh" EntityType="Self.LoaiDeTaiChuyenNganh" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nhom" EntityType="Self.Nhom" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SinhVien" EntityType="Self.SinhVien" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThongBao" EntityType="Self.ThongBao" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="fk_accountStudent" Association="Self.fk_accountStudent">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="SinhVien" EntitySet="SinhVien" />
@@ -436,6 +451,10 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             <End Role="ChuyenNganh" EntitySet="ChuyenNganh" />
             <End Role="SinhVien" EntitySet="SinhVien" />
           </AssociationSet>
+          <AssociationSet Name="fk_ThongBao_LoaiDeTai" Association="Self.fk_ThongBao_LoaiDeTai">
+            <End Role="LoaiDeTai" EntitySet="LoaiDeTai" />
+            <End Role="ThongBao" EntitySet="ThongBao" />
+          </AssociationSet>
           <AssociationSet Name="fk_truongBoMon" Association="Self.fk_truongBoMon">
             <End Role="GiangVien" EntitySet="GiangVien" />
             <End Role="ChuyenNganh" EntitySet="ChuyenNganh" />
@@ -445,7 +464,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="QuanLyDeTaiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="QuanLyDeTai2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -581,6 +600,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <Property Name="maChuyenNganh" Type="Int32" />
           <NavigationProperty Name="ChuyenNganh" Relationship="Self.fk_loaiDeTai_chuyenNganh" FromRole="LoaiDeTai" ToRole="ChuyenNganh" />
           <NavigationProperty Name="DeTais" Relationship="Self.FK_DeTai_LoaiDeTai_loaiDeTai" FromRole="LoaiDeTai" ToRole="DeTai" />
+          <NavigationProperty Name="ThongBaos" Relationship="Self.fk_ThongBao_LoaiDeTai" FromRole="LoaiDeTai" ToRole="ThongBao" />
           <NavigationProperty Name="ChuyenNganhs" Relationship="Self.LoaiDeTaiChuyenNganh" FromRole="LoaiDeTai" ToRole="ChuyenNganh" />
         </EntityType>
         <EntityType Name="Nhom">
@@ -604,15 +624,19 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <NavigationProperty Name="AspNetUser" Relationship="Self.fk_accountStudent" FromRole="SinhVien" ToRole="AspNetUsers" />
           <NavigationProperty Name="ChuyenNganh" Relationship="Self.fk_sinhVien_chuyenNganh" FromRole="SinhVien" ToRole="ChuyenNganh" />
         </EntityType>
-        <EntityType Name="sysdiagram">
+        <EntityType Name="ThongBao">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="maThongBao" />
           </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="maThongBao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tieuDe" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="moTa" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="noiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="trangThai" Type="Byte" />
+          <Property Name="ngayTao" Type="DateTime" Precision="3" />
+          <Property Name="fileDinhKem" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="maLoaiDeTai" Type="Int32" />
+          <NavigationProperty Name="LoaiDeTai" Relationship="Self.fk_ThongBao_LoaiDeTai" FromRole="ThongBao" ToRole="LoaiDeTai" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -750,6 +774,18 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_ThongBao_LoaiDeTai">
+          <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="0..1" />
+          <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoaiDeTai">
+              <PropertyRef Name="maLoaiDeTai" />
+            </Principal>
+            <Dependent Role="ThongBao">
+              <PropertyRef Name="maLoaiDeTai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
@@ -758,7 +794,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="*" />
           <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="QuanLyDeTaiEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="QuanLyDeTai2Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
@@ -772,7 +808,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <EntitySet Name="LoaiDeTais" EntityType="Self.LoaiDeTai" />
           <EntitySet Name="Nhoms" EntityType="Self.Nhom" />
           <EntitySet Name="SinhViens" EntityType="Self.SinhVien" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="ThongBaos" EntityType="Self.ThongBao" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -817,6 +853,10 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             <End Role="DeTai" EntitySet="DeTais" />
             <End Role="GiangVienPhanBien" EntitySet="GiangVienPhanBiens" />
           </AssociationSet>
+          <AssociationSet Name="fk_ThongBao_LoaiDeTai" Association="Self.fk_ThongBao_LoaiDeTai">
+            <End Role="LoaiDeTai" EntitySet="LoaiDeTais" />
+            <End Role="ThongBao" EntitySet="ThongBaos" />
+          </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -831,9 +871,9 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="QuanLyDeTaiModelStoreContainer" CdmEntityContainer="QuanLyDeTaiEntities">
+        <EntityContainerMapping StorageEntityContainer="QuanLyDeTai2ModelStoreContainer" CdmEntityContainer="QuanLyDeTai2Entities">
           <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="QuanLyDeTaiModel.C__MigrationHistory">
+            <EntityTypeMapping TypeName="QuanLyDeTai2Model.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
                 <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
@@ -843,7 +883,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="QuanLyDeTaiModel.AspNetRole">
+            <EntityTypeMapping TypeName="QuanLyDeTai2Model.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -851,7 +891,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="QuanLyDeTaiModel.AspNetUserClaim">
+            <EntityTypeMapping TypeName="QuanLyDeTai2Model.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -861,7 +901,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="QuanLyDeTaiModel.AspNetUserLogin">
+            <EntityTypeMapping TypeName="QuanLyDeTai2Model.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -870,7 +910,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="QuanLyDeTaiModel.AspNetUser">
+            <EntityTypeMapping TypeName="QuanLyDeTai2Model.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -888,7 +928,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChuyenNganhs">
-            <EntityTypeMapping TypeName="QuanLyDeTaiModel.ChuyenNganh">
+            <EntityTypeMapping TypeName="QuanLyDeTai2Model.ChuyenNganh">
               <MappingFragment StoreEntitySet="ChuyenNganh">
                 <ScalarProperty Name="maChuyenNganh" ColumnName="maChuyenNganh" />
                 <ScalarProperty Name="tenChuyenNganh" ColumnName="tenChuyenNganh" />
@@ -897,7 +937,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DeTais">
-            <EntityTypeMapping TypeName="QuanLyDeTaiModel.DeTai">
+            <EntityTypeMapping TypeName="QuanLyDeTai2Model.DeTai">
               <MappingFragment StoreEntitySet="DeTai">
                 <ScalarProperty Name="maDeTai" ColumnName="maDeTai" />
                 <ScalarProperty Name="tenDeTai" ColumnName="tenDeTai" />
@@ -916,7 +956,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="GiangViens">
-            <EntityTypeMapping TypeName="QuanLyDeTaiModel.GiangVien">
+            <EntityTypeMapping TypeName="QuanLyDeTai2Model.GiangVien">
               <MappingFragment StoreEntitySet="GiangVien">
                 <ScalarProperty Name="account_ID" ColumnName="account_ID" />
                 <ScalarProperty Name="tenGiangVien" ColumnName="tenGiangVien" />
@@ -926,7 +966,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="GiangVienPhanBiens">
-            <EntityTypeMapping TypeName="QuanLyDeTaiModel.GiangVienPhanBien">
+            <EntityTypeMapping TypeName="QuanLyDeTai2Model.GiangVienPhanBien">
               <MappingFragment StoreEntitySet="GiangVienPhanBien">
                 <ScalarProperty Name="maPhanBien" ColumnName="maPhanBien" />
                 <ScalarProperty Name="maGiangVien" ColumnName="maGiangVien" />
@@ -935,7 +975,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="HoiDongChams">
-            <EntityTypeMapping TypeName="QuanLyDeTaiModel.HoiDongCham">
+            <EntityTypeMapping TypeName="QuanLyDeTai2Model.HoiDongCham">
               <MappingFragment StoreEntitySet="HoiDongCham">
                 <ScalarProperty Name="maHoiDong" ColumnName="maHoiDong" />
                 <ScalarProperty Name="maDeTai" ColumnName="maDeTai" />
@@ -944,7 +984,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LoaiDeTais">
-            <EntityTypeMapping TypeName="QuanLyDeTaiModel.LoaiDeTai">
+            <EntityTypeMapping TypeName="QuanLyDeTai2Model.LoaiDeTai">
               <MappingFragment StoreEntitySet="LoaiDeTai">
                 <ScalarProperty Name="maLoaiDeTai" ColumnName="maLoaiDeTai" />
                 <ScalarProperty Name="tenLoaiDeTai" ColumnName="tenLoaiDeTai" />
@@ -955,7 +995,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Nhoms">
-            <EntityTypeMapping TypeName="QuanLyDeTaiModel.Nhom">
+            <EntityTypeMapping TypeName="QuanLyDeTai2Model.Nhom">
               <MappingFragment StoreEntitySet="Nhom">
                 <ScalarProperty Name="maNhom" ColumnName="maNhom" />
                 <ScalarProperty Name="maNhomTruong" ColumnName="maNhomTruong" />
@@ -965,7 +1005,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SinhViens">
-            <EntityTypeMapping TypeName="QuanLyDeTaiModel.SinhVien">
+            <EntityTypeMapping TypeName="QuanLyDeTai2Model.SinhVien">
               <MappingFragment StoreEntitySet="SinhVien">
                 <ScalarProperty Name="account_ID" ColumnName="account_ID" />
                 <ScalarProperty Name="MSSV" ColumnName="MSSV" />
@@ -974,18 +1014,21 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="QuanLyDeTaiModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
+          <EntitySetMapping Name="ThongBaos">
+            <EntityTypeMapping TypeName="QuanLyDeTai2Model.ThongBao">
+              <MappingFragment StoreEntitySet="ThongBao">
+                <ScalarProperty Name="maThongBao" ColumnName="maThongBao" />
+                <ScalarProperty Name="tieuDe" ColumnName="tieuDe" />
+                <ScalarProperty Name="moTa" ColumnName="moTa" />
+                <ScalarProperty Name="noiDung" ColumnName="noiDung" />
+                <ScalarProperty Name="trangThai" ColumnName="trangThai" />
+                <ScalarProperty Name="ngayTao" ColumnName="ngayTao" />
+                <ScalarProperty Name="fileDinhKem" ColumnName="fileDinhKem" />
+                <ScalarProperty Name="maLoaiDeTai" ColumnName="maLoaiDeTai" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="QuanLyDeTaiModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="QuanLyDeTai2Model.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
@@ -993,7 +1036,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="LoaiDeTaiChuyenNganh" TypeName="QuanLyDeTaiModel.LoaiDeTaiChuyenNganh" StoreEntitySet="LoaiDeTaiChuyenNganh">
+          <AssociationSetMapping Name="LoaiDeTaiChuyenNganh" TypeName="QuanLyDeTai2Model.LoaiDeTaiChuyenNganh" StoreEntitySet="LoaiDeTaiChuyenNganh">
             <EndProperty Name="ChuyenNganh">
               <ScalarProperty Name="maChuyenNganh" ColumnName="maChuyenNganh" />
             </EndProperty>

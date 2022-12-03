@@ -18,6 +18,7 @@ namespace QuanLyDeTai.Models
         public LoaiDeTai()
         {
             this.DeTais = new HashSet<DeTai>();
+            this.ThongBaos = new HashSet<ThongBao>();
             this.ChuyenNganhs = new HashSet<ChuyenNganh>();
         }
     
@@ -30,6 +31,8 @@ namespace QuanLyDeTai.Models
         public virtual ChuyenNganh ChuyenNganh { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeTai> DeTais { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ThongBao> ThongBaos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChuyenNganh> ChuyenNganhs { get; set; }
     }

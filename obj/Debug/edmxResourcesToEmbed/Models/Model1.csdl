@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="QuanLyDeTaiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="QuanLyDeTai2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="C__MigrationHistory">
     <Key>
       <PropertyRef Name="MigrationId" />
@@ -135,6 +135,7 @@
     <Property Name="maChuyenNganh" Type="Int32" />
     <NavigationProperty Name="ChuyenNganh" Relationship="Self.fk_loaiDeTai_chuyenNganh" FromRole="LoaiDeTai" ToRole="ChuyenNganh" />
     <NavigationProperty Name="DeTais" Relationship="Self.FK_DeTai_LoaiDeTai_loaiDeTai" FromRole="LoaiDeTai" ToRole="DeTai" />
+    <NavigationProperty Name="ThongBaos" Relationship="Self.fk_ThongBao_LoaiDeTai" FromRole="LoaiDeTai" ToRole="ThongBao" />
     <NavigationProperty Name="ChuyenNganhs" Relationship="Self.LoaiDeTaiChuyenNganh" FromRole="LoaiDeTai" ToRole="ChuyenNganh" />
   </EntityType>
   <EntityType Name="Nhom">
@@ -158,15 +159,19 @@
     <NavigationProperty Name="AspNetUser" Relationship="Self.fk_accountStudent" FromRole="SinhVien" ToRole="AspNetUsers" />
     <NavigationProperty Name="ChuyenNganh" Relationship="Self.fk_sinhVien_chuyenNganh" FromRole="SinhVien" ToRole="ChuyenNganh" />
   </EntityType>
-  <EntityType Name="sysdiagram">
+  <EntityType Name="ThongBao">
     <Key>
-      <PropertyRef Name="diagram_id" />
+      <PropertyRef Name="maThongBao" />
     </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="maThongBao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tieuDe" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="moTa" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="noiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="trangThai" Type="Byte" />
+    <Property Name="ngayTao" Type="DateTime" Precision="3" />
+    <Property Name="fileDinhKem" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="maLoaiDeTai" Type="Int32" />
+    <NavigationProperty Name="LoaiDeTai" Relationship="Self.fk_ThongBao_LoaiDeTai" FromRole="ThongBao" ToRole="LoaiDeTai" />
   </EntityType>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -304,6 +309,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_ThongBao_LoaiDeTai">
+    <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="0..1" />
+    <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LoaiDeTai">
+        <PropertyRef Name="maLoaiDeTai" />
+      </Principal>
+      <Dependent Role="ThongBao">
+        <PropertyRef Name="maLoaiDeTai" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="AspNetUserRoles">
     <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
     <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
@@ -312,7 +329,7 @@
     <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="*" />
     <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="*" />
   </Association>
-  <EntityContainer Name="QuanLyDeTaiEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="QuanLyDeTai2Entities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
@@ -326,7 +343,7 @@
     <EntitySet Name="LoaiDeTais" EntityType="Self.LoaiDeTai" />
     <EntitySet Name="Nhoms" EntityType="Self.Nhom" />
     <EntitySet Name="SinhViens" EntityType="Self.SinhVien" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="ThongBaos" EntityType="Self.ThongBao" />
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -370,6 +387,10 @@
     <AssociationSet Name="FK_PhanBien_DeTai" Association="Self.FK_PhanBien_DeTai">
       <End Role="DeTai" EntitySet="DeTais" />
       <End Role="GiangVienPhanBien" EntitySet="GiangVienPhanBiens" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ThongBao_LoaiDeTai" Association="Self.fk_ThongBao_LoaiDeTai">
+      <End Role="LoaiDeTai" EntitySet="LoaiDeTais" />
+      <End Role="ThongBao" EntitySet="ThongBaos" />
     </AssociationSet>
     <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
       <End Role="AspNetRoles" EntitySet="AspNetRoles" />

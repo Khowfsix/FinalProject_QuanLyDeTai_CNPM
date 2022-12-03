@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="QuanLyDeTaiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="QuanLyDeTai2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="__MigrationHistory">
     <Key>
       <PropertyRef Name="MigrationId" />
@@ -148,15 +148,18 @@
     <Property Name="tenSinhVien" Type="nvarchar" MaxLength="256" />
     <Property Name="maChuyenNganh" Type="int" />
   </EntityType>
-  <EntityType Name="sysdiagrams">
+  <EntityType Name="ThongBao">
     <Key>
-      <PropertyRef Name="diagram_id" />
+      <PropertyRef Name="maThongBao" />
     </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
+    <Property Name="maThongBao" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tieuDe" Type="nvarchar" MaxLength="255" />
+    <Property Name="moTa" Type="nvarchar" MaxLength="255" />
+    <Property Name="noiDung" Type="text" />
+    <Property Name="trangThai" Type="tinyint" />
+    <Property Name="ngayTao" Type="datetime" />
+    <Property Name="fileDinhKem" Type="varchar" MaxLength="255" />
+    <Property Name="maLoaiDeTai" Type="int" />
   </EntityType>
   <Association Name="fk_accountStudent">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
@@ -346,6 +349,18 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_ThongBao_LoaiDeTai">
+    <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="0..1" />
+    <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LoaiDeTai">
+        <PropertyRef Name="maLoaiDeTai" />
+      </Principal>
+      <Dependent Role="ThongBao">
+        <PropertyRef Name="maLoaiDeTai" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_truongBoMon">
     <End Role="GiangVien" Type="Self.GiangVien" Multiplicity="0..1" />
     <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="*" />
@@ -358,7 +373,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="QuanLyDeTaiModelStoreContainer">
+  <EntityContainer Name="QuanLyDeTai2ModelStoreContainer">
     <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -374,7 +389,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
     <EntitySet Name="LoaiDeTaiChuyenNganh" EntityType="Self.LoaiDeTaiChuyenNganh" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Nhom" EntityType="Self.Nhom" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SinhVien" EntityType="Self.SinhVien" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ThongBao" EntityType="Self.ThongBao" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="fk_accountStudent" Association="Self.fk_accountStudent">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="SinhVien" EntitySet="SinhVien" />
@@ -430,6 +445,10 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
     <AssociationSet Name="fk_sinhVien_chuyenNganh" Association="Self.fk_sinhVien_chuyenNganh">
       <End Role="ChuyenNganh" EntitySet="ChuyenNganh" />
       <End Role="SinhVien" EntitySet="SinhVien" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ThongBao_LoaiDeTai" Association="Self.fk_ThongBao_LoaiDeTai">
+      <End Role="LoaiDeTai" EntitySet="LoaiDeTai" />
+      <End Role="ThongBao" EntitySet="ThongBao" />
     </AssociationSet>
     <AssociationSet Name="fk_truongBoMon" Association="Self.fk_truongBoMon">
       <End Role="GiangVien" EntitySet="GiangVien" />

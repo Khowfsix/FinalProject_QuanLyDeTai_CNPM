@@ -12,7 +12,7 @@ namespace QuanLyDeTai.Controllers
 {
     public class HoiDongChamsController : Controller
     {
-        private QuanLyDeTaiEntities db = new QuanLyDeTaiEntities();
+        private QuanLyDeTai2Entities db = new QuanLyDeTai2Entities();
 
         // GET: HoiDongChams
         public ActionResult Index()

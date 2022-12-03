@@ -181,6 +181,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NhomsController.cs" />
     <Compile Include="Controllers\SinhViensController.cs" />
+    <Compile Include="Controllers\ThongBaosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -247,7 +248,7 @@
     <Compile Include="Models\SinhVien.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagram.cs">
+    <Compile Include="Models\ThongBao.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -369,9 +370,15 @@
     <Content Include="Views\HoiDongChams\Details.cshtml" />
     <Content Include="Views\HoiDongChams\Edit.cshtml" />
     <Content Include="Views\HoiDongChams\Index.cshtml" />
+    <Content Include="Views\ThongBaos\Create.cshtml" />
+    <Content Include="Views\ThongBaos\Delete.cshtml" />
+    <Content Include="Views\ThongBaos\Details.cshtml" />
+    <Content Include="Views\ThongBaos\Edit.cshtml" />
+    <Content Include="Views\ThongBaos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Upload\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

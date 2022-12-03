@@ -12,7 +12,7 @@ namespace QuanLyDeTai.Controllers
 {
     public class NhomsController : Controller
     {
-        private QuanLyDeTaiEntities db = new QuanLyDeTaiEntities();
+        private QuanLyDeTai2Entities db = new QuanLyDeTai2Entities();
 
         // GET: Nhoms
         public ActionResult Index()
