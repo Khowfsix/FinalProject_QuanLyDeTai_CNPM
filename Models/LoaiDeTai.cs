@@ -18,19 +18,17 @@ namespace QuanLyDeTai.Models
         public LoaiDeTai()
         {
             this.DeTais = new HashSet<DeTai>();
-            this.ChuyenNganhs = new HashSet<ChuyenNganh>();
+            this.ThongBaos = new HashSet<ThongBao>();
         }
     
         public int maLoaiDeTai { get; set; }
         public string tenLoaiDeTai { get; set; }
         public string nienKhoa { get; set; }
         public Nullable<int> hocKy { get; set; }
-        public Nullable<int> maChuyenNganh { get; set; }
     
-        public virtual ChuyenNganh ChuyenNganh { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeTai> DeTais { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChuyenNganh> ChuyenNganhs { get; set; }
+        public virtual ICollection<ThongBao> ThongBaos { get; set; }
     }
 }

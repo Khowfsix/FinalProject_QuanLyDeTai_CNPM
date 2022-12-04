@@ -14,10 +14,9 @@ namespace QuanLyDeTai.Models
     
     public partial class Nhom
     {
-        public int maNhom { get; set; }
-        public Nullable<int> maNhomTruong { get; set; }
-        public Nullable<int> soLuongSv { get; set; }
-        public Nullable<int> maDeTai { get; set; }
+        public int maDeTai { get; set; }
+        public int MSSV { get; set; }
+        public int id { get; set; }
     
         public virtual DeTai DeTai { get; set; }
     }

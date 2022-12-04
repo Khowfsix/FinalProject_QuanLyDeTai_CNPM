@@ -5,14 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Chi tiết</h2>
 
 <div>
-    <h4>DeTai</h4>
+    <h4>Đề tài</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.tenDeTai)
+            @Html.DisplayName("Tên đề tài")
         </dt>
 
         <dd>
@@ -20,7 +20,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.mucTieu)
+            @Html.DisplayName("Mục tiêu")
         </dt>
 
         <dd>
@@ -28,7 +28,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.yeuCau)
+            @Html.DisplayName("Yêu cầu")
         </dt>
 
         <dd>
@@ -36,7 +36,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.sanPham)
+            @Html.DisplayName("Sản phẩm")
         </dt>
 
         <dd>
@@ -44,7 +44,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.chuThich)
+            @Html.DisplayName("Chú thích")
         </dt>
 
         <dd>
@@ -52,7 +52,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.soLuongSinhVienToiDa)
+            @Html.DisplayName("Số lượng sinh viên tối đa")
         </dt>
 
         <dd>
@@ -60,7 +60,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.duocDangKyKhacChuyenNganh)
+            @Html.DisplayName("Được đăng ký khác chuyên ngành")
         </dt>
 
         <dd>
@@ -68,7 +68,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.nienKhoa)
+            @Html.DisplayName("Niên khóa")
         </dt>
 
         <dd>
@@ -76,7 +76,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.diem)
+            @Html.DisplayName("Điểm")
         </dt>
 
         <dd>
@@ -84,7 +84,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.truongNhom)
+            @Html.DisplayName("Trưởng nhóm")
         </dt>
 
         <dd>
@@ -92,7 +92,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.gvHuongDan)
+            @Html.DisplayName("Giảng viên hướng dẫn")
         </dt>
 
         <dd>
@@ -100,7 +100,23 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LoaiDeTai1.tenLoaiDeTai)
+            @Html.DisplayName("Trạng thái")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Tên chuyên ngành")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChuyenNganh.tenChuyenNganh)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Loại đề tài")
         </dt>
 
         <dd>
@@ -110,6 +126,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.maDeTai }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.maDeTai }) |
+    @Html.ActionLink("Quay lại danh sách", "Index")
 </p>

@@ -12,12 +12,12 @@ namespace QuanLyDeTai.Controllers
 {
     public class SinhViensController : Controller
     {
-        private QuanLyDeTaiEntities1 db = new QuanLyDeTaiEntities1();
+        private QuanLyDeTaiEntities db = new QuanLyDeTaiEntities();
 
         // GET: SinhViens
         public ActionResult Index()
         {
-            var sinhViens = db.SinhViens.Include(s => s.AspNetUser).Include(s => s.ChuyenNganh);
+            var sinhViens = db.SinhViens.Include(s => s.AspNetUser).Include(s => s.ChuyenNganh);          
             return View(sinhViens.ToList());
         }
 
@@ -39,7 +39,7 @@ namespace QuanLyDeTai.Controllers
         // GET: SinhViens/Create
         public ActionResult Create()
         {
-            ViewBag.account_ID = new SelectList(db.AspNetUsers, "Id", "Email");
+            ViewBag.account_ID = new SelectList(db.AspNetUsers.Where(p => p.GiangVien == null), "Id", "Email");
             ViewBag.maChuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh");
             return View();
         }

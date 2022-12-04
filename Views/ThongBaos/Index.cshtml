@@ -13,22 +13,25 @@
 <table class="table">
     <tr>
         <th>
-            Tiêu đề thông báo
+            @Html.DisplayNameFor(model => model.tieuDe)
         </th>
         <th>
-            Mô tả
+            @Html.DisplayNameFor(model => model.moTa)
         </th>
         <th>
-            Nội dung
+            @Html.DisplayNameFor(model => model.noiDung)
         </th>
         <th>
-            Trạng thái
+            @Html.DisplayNameFor(model => model.trangThai)
         </th>
         <th>
-            File đính kèm
+            @Html.DisplayNameFor(model => model.ngayTao)
         </th>
         <th>
-            Ngày tạo
+            @Html.DisplayNameFor(model => model.fileDinhKem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoaiDeTai.tenLoaiDeTai)
         </th>
         <th></th>
     </tr>
@@ -44,28 +47,22 @@
         <td>
             @Html.DisplayFor(modelItem => item.noiDung)
         </td>
-        @if (item.trangThai == 1)
-        {
-            <td>
-                Còn hiệu lực
-            </td>
-        }
-        else
-        {
-            <td>
-                Hết hiệu lực
-            </td>
-        }
         <td>
-            <a href="~/Upload/@item.fileDinhKem">@Html.DisplayFor(modelItem => item.fileDinhKem)</a>
+            @Html.DisplayFor(modelItem => item.trangThai)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ngayTao)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.maThongBao }) |
-            @Html.ActionLink("Details", "Details", new { id = item.maThongBao }) |
-            @Html.ActionLink("Delete", "XoaThongBao", new { id = item.maThongBao })
+            @Html.DisplayFor(modelItem => item.fileDinhKem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoaiDeTai.tenLoaiDeTai)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.maThongBao }) |
+            @Html.ActionLink("Details", "Details", new { id=item.maThongBao }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.maThongBao })
         </td>
     </tr>
 }

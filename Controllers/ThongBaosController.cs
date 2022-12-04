@@ -2,35 +2,34 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
 using QuanLyDeTai.Models;
 
 namespace QuanLyDeTai.Controllers
 {
     public class ThongBaosController : Controller
     {
-        private QuanLyDeTaiEntities1 db = new QuanLyDeTaiEntities1();
+        private QuanLyDeTaiEntities db = new QuanLyDeTaiEntities();
 
         // GET: ThongBaos
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var thongBaos = db.ThongBaos.ToList();
-            return View(thongBaos);
+            var thongBaos = db.ThongBaos.Include(t => t.LoaiDeTai);
+            return View(await thongBaos.ToListAsync());
         }
 
         // GET: ThongBaos/Details/5
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ThongBao thongBao = db.ThongBaos.Find(id);
+            ThongBao thongBao = await db.ThongBaos.FindAsync(id);
             if (thongBao == null)
             {
                 return HttpNotFound();
@@ -41,56 +40,41 @@ namespace QuanLyDeTai.Controllers
         // GET: ThongBaos/Create
         public ActionResult Create()
         {
+            ViewBag.maLoaiDeTai = new SelectList(db.LoaiDeTais, "maLoaiDeTai", "tenLoaiDeTai");
             return View();
         }
 
         // POST: ThongBaos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ActionName("themThongBao")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(FormCollection formthongBao, HttpPostedFileBase file)
+        public async Task<ActionResult> Create([Bind(Include = "maThongBao,tieuDe,moTa,noiDung,trangThai,ngayTao,fileDinhKem,maLoaiDeTai")] ThongBao thongBao)
         {
-            var thongBao = new ThongBao();
-            if (file != null)
+            if (ModelState.IsValid)
             {
-                string FileName = Path.GetFileName(file.FileName);
-                string path = Path.Combine(Server.MapPath("~/Upload"), FileName);
-                file.SaveAs(path);
-                thongBao.fileDinhKem = FileName;
+                db.ThongBaos.Add(thongBao);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
             }
-            var tieuDe = formthongBao["tieuDe"];
-            var moTa = formthongBao["moTa"];
-            var noiDung = formthongBao["noiDung"];
-            var trangThai = Convert.ToByte(formthongBao["trangThai"]);
-            thongBao.tieuDe = tieuDe;
-            thongBao.moTa = moTa;
-            thongBao.noiDung = noiDung;
-            thongBao.trangThai = trangThai;
-            thongBao.ngayTao = DateTime.Now;
-            db.ThongBaos.Add(thongBao);
-            db.SaveChanges();
-            return RedirectToAction("Index", "ThongBaos");
+
+            ViewBag.maLoaiDeTai = new SelectList(db.LoaiDeTais, "maLoaiDeTai", "tenLoaiDeTai", thongBao.maLoaiDeTai);
+            return View(thongBao);
         }
-        public ActionResult XoaThongBao(int id)
-        {
-            ThongBao thongBao = db.ThongBaos.Find(id);
-            db.ThongBaos.Remove(thongBao);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+
         // GET: ThongBaos/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ThongBao thongBao = db.ThongBaos.Find(id);
+            ThongBao thongBao = await db.ThongBaos.FindAsync(id);
             if (thongBao == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.maLoaiDeTai = new SelectList(db.LoaiDeTais, "maLoaiDeTai", "tenLoaiDeTai", thongBao.maLoaiDeTai);
             return View(thongBao);
         }
 
@@ -99,25 +83,26 @@ namespace QuanLyDeTai.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "maThongBao,tieuDe,moTa,noiDung,trangThai,ngayTao")] ThongBao thongBao)
+        public async Task<ActionResult> Edit([Bind(Include = "maThongBao,tieuDe,moTa,noiDung,trangThai,ngayTao,fileDinhKem,maLoaiDeTai")] ThongBao thongBao)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(thongBao).State = EntityState.Modified;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            ViewBag.maLoaiDeTai = new SelectList(db.LoaiDeTais, "maLoaiDeTai", "tenLoaiDeTai", thongBao.maLoaiDeTai);
             return View(thongBao);
         }
 
         // GET: ThongBaos/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ThongBao thongBao = db.ThongBaos.Find(id);
+            ThongBao thongBao = await db.ThongBaos.FindAsync(id);
             if (thongBao == null)
             {
                 return HttpNotFound();
@@ -128,11 +113,11 @@ namespace QuanLyDeTai.Controllers
         // POST: ThongBaos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            ThongBao thongBao = db.ThongBaos.Find(id);
+            ThongBao thongBao = await db.ThongBaos.FindAsync(id);
             db.ThongBaos.Remove(thongBao);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 

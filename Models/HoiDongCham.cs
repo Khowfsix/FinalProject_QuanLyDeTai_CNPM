@@ -14,9 +14,9 @@ namespace QuanLyDeTai.Models
     
     public partial class HoiDongCham
     {
-        public int maHoiDong { get; set; }
-        public Nullable<int> maDeTai { get; set; }
-        public Nullable<int> soLuongGV { get; set; }
+        public int id { get; set; }
+        public int maGiangVien { get; set; }
+        public int maDeTai { get; set; }
     
         public virtual DeTai DeTai { get; set; }
     }

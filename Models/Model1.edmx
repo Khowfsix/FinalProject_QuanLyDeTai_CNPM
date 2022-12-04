@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="QuanLyDeTaiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="QuanLyDeTaiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -91,6 +91,8 @@
           <Property Name="diem" Type="float" />
           <Property Name="truongNhom" Type="int" />
           <Property Name="gvHuongDan" Type="int" />
+          <Property Name="TrangThai" Type="nvarchar" MaxLength="255" />
+          <Property Name="maChuyenNganh" Type="int" />
         </EntityType>
         <EntityType Name="GiangVien">
           <Key>
@@ -101,21 +103,31 @@
           <Property Name="loaiGiangVien" Type="nvarchar" MaxLength="256" />
           <Property Name="maGiangVien" Type="int" />
         </EntityType>
+        <EntityType Name="GiangVienChuyenNganh">
+          <Key>
+            <PropertyRef Name="maChuyenNganh" />
+            <PropertyRef Name="maGiangVien" />
+          </Key>
+          <Property Name="maChuyenNganh" Type="int" Nullable="false" />
+          <Property Name="maGiangVien" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="GiangVienPhanBien">
           <Key>
-            <PropertyRef Name="maPhanBien" />
+            <PropertyRef Name="maGiangVien" />
+            <PropertyRef Name="maDeTai" />
           </Key>
-          <Property Name="maPhanBien" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="maGiangVien" Type="int" />
-          <Property Name="maDeTai" Type="int" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="maGiangVien" Type="int" Nullable="false" />
+          <Property Name="maDeTai" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="HoiDongCham">
           <Key>
-            <PropertyRef Name="maHoiDong" />
+            <PropertyRef Name="maGiangVien" />
+            <PropertyRef Name="maDeTai" />
           </Key>
-          <Property Name="maHoiDong" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="maDeTai" Type="int" />
-          <Property Name="soLuongGV" Type="int" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="maGiangVien" Type="int" Nullable="false" />
+          <Property Name="maDeTai" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="LoaiDeTai">
           <Key>
@@ -125,24 +137,15 @@
           <Property Name="tenLoaiDeTai" Type="nvarchar" MaxLength="256" />
           <Property Name="nienKhoa" Type="nvarchar" MaxLength="256" />
           <Property Name="hocKy" Type="int" />
-          <Property Name="maChuyenNganh" Type="int" />
-        </EntityType>
-        <EntityType Name="LoaiDeTaiChuyenNganh">
-          <Key>
-            <PropertyRef Name="maChuyenNganh" />
-            <PropertyRef Name="maLoaiDeTai" />
-          </Key>
-          <Property Name="maChuyenNganh" Type="int" Nullable="false" />
-          <Property Name="maLoaiDeTai" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Nhom">
           <Key>
-            <PropertyRef Name="maNhom" />
+            <PropertyRef Name="maDeTai" />
+            <PropertyRef Name="MSSV" />
           </Key>
-          <Property Name="maNhom" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="maNhomTruong" Type="int" />
-          <Property Name="soLuongSv" Type="int" />
-          <Property Name="maDeTai" Type="int" />
+          <Property Name="maDeTai" Type="int" Nullable="false" />
+          <Property Name="MSSV" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="SinhVien">
           <Key>
@@ -152,6 +155,16 @@
           <Property Name="MSSV" Type="int" Nullable="false" />
           <Property Name="tenSinhVien" Type="nvarchar" MaxLength="256" />
           <Property Name="maChuyenNganh" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="ThongBao">
           <Key>
@@ -164,6 +177,7 @@
           <Property Name="trangThai" Type="tinyint" />
           <Property Name="ngayTao" Type="datetime" />
           <Property Name="fileDinhKem" Type="varchar" MaxLength="255" />
+          <Property Name="maLoaiDeTai" Type="int" />
         </EntityType>
         <Association Name="fk_accountStudent">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
@@ -245,6 +259,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DeTai_ChuyenNganh_maChuyenNganh">
+          <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="0..1" />
+          <End Role="DeTai" Type="Self.DeTai" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuyenNganh">
+              <PropertyRef Name="maChuyenNganh" />
+            </Principal>
+            <Dependent Role="DeTai">
+              <PropertyRef Name="maChuyenNganh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_DeTai_GiangVien_gvHuongDan' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="FK_DeTai_GiangVien_gvHuongDan" />-->
@@ -263,74 +289,23 @@ warning 6035: The relationship 'FK_DeTai_GiangVien_gvHuongDan' has columns that 
         <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_DeTai_SinhVien_truongNhom' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="FK_DeTai_SinhVien_truongNhom" />-->
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'fk_giangVienPhanBien' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="fk_giangVienPhanBien" />-->
-        <Association Name="FK_hoiDongCham_DeTai">
-          <End Role="DeTai" Type="Self.DeTai" Multiplicity="0..1" />
-          <End Role="HoiDongCham" Type="Self.HoiDongCham" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DeTai">
-              <PropertyRef Name="maDeTai" />
-            </Principal>
-            <Dependent Role="HoiDongCham">
-              <PropertyRef Name="maDeTai" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_loaiDeTai_chuyenNganh">
-          <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="0..1" />
-          <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ChuyenNganh">
-              <PropertyRef Name="maChuyenNganh" />
-            </Principal>
-            <Dependent Role="LoaiDeTai">
-              <PropertyRef Name="maChuyenNganh" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LoaiDeTaiChuyenNganh_ChuyenNganh_maChuyenNganh">
+        <Association Name="FK_GiangVienChuyenNganh_ChuyenNganh_maChuyenNganh">
           <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="1" />
-          <End Role="LoaiDeTaiChuyenNganh" Type="Self.LoaiDeTaiChuyenNganh" Multiplicity="*" />
+          <End Role="GiangVienChuyenNganh" Type="Self.GiangVienChuyenNganh" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ChuyenNganh">
               <PropertyRef Name="maChuyenNganh" />
             </Principal>
-            <Dependent Role="LoaiDeTaiChuyenNganh">
+            <Dependent Role="GiangVienChuyenNganh">
               <PropertyRef Name="maChuyenNganh" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LoaiDeTaiChuyenNganh_LoaiDeTai_maLoaiDeTai">
-          <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="1" />
-          <End Role="LoaiDeTaiChuyenNganh" Type="Self.LoaiDeTaiChuyenNganh" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LoaiDeTai">
-              <PropertyRef Name="maLoaiDeTai" />
-            </Principal>
-            <Dependent Role="LoaiDeTaiChuyenNganh">
-              <PropertyRef Name="maLoaiDeTai" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_Nhom_SinhVien1" />-->
-        <Association Name="fk_nhomDeTai">
-          <End Role="DeTai" Type="Self.DeTai" Multiplicity="0..1" />
-          <End Role="Nhom" Type="Self.Nhom" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DeTai">
-              <PropertyRef Name="maDeTai" />
-            </Principal>
-            <Dependent Role="Nhom">
-              <PropertyRef Name="maDeTai" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PhanBien_DeTai">
-          <End Role="DeTai" Type="Self.DeTai" Multiplicity="0..1" />
+warning 6035: The relationship 'FK_GiangVienChuyenNganh_GiangVien_maGiangVien' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_GiangVienChuyenNganh_GiangVien_maGiangVien" />-->
+        <Association Name="FK_GiangVienPhanBien_DeTai_maDeTai">
+          <End Role="DeTai" Type="Self.DeTai" Multiplicity="1" />
           <End Role="GiangVienPhanBien" Type="Self.GiangVienPhanBien" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DeTai">
@@ -341,6 +316,39 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_GiangVienPhanBien_GiangVien_maGiangVien' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_GiangVienPhanBien_GiangVien_maGiangVien" />-->
+        <Association Name="FK_HoiDongCham_DeTai_maDeTai">
+          <End Role="DeTai" Type="Self.DeTai" Multiplicity="1" />
+          <End Role="HoiDongCham" Type="Self.HoiDongCham" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeTai">
+              <PropertyRef Name="maDeTai" />
+            </Principal>
+            <Dependent Role="HoiDongCham">
+              <PropertyRef Name="maDeTai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_HoiDongCham_GiangVien_maGiangVien' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_HoiDongCham_GiangVien_maGiangVien" />-->
+        <Association Name="FK_Nhom_DeTai_maDeTai">
+          <End Role="DeTai" Type="Self.DeTai" Multiplicity="1" />
+          <End Role="Nhom" Type="Self.Nhom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeTai">
+              <PropertyRef Name="maDeTai" />
+            </Principal>
+            <Dependent Role="Nhom">
+              <PropertyRef Name="maDeTai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Nhom_SinhVien_MSSV' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Nhom_SinhVien_MSSV" />-->
         <Association Name="fk_sinhVien_chuyenNganh">
           <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="0..1" />
           <End Role="SinhVien" Type="Self.SinhVien" Multiplicity="*" />
@@ -350,6 +358,18 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </Principal>
             <Dependent Role="SinhVien">
               <PropertyRef Name="maChuyenNganh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBao_LoaiDeTai_maLoaiDeTai">
+          <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="0..1" />
+          <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoaiDeTai">
+              <PropertyRef Name="maLoaiDeTai" />
+            </Principal>
+            <Dependent Role="ThongBao">
+              <PropertyRef Name="maLoaiDeTai" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -375,12 +395,13 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <EntitySet Name="ChuyenNganh" EntityType="Self.ChuyenNganh" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeTai" EntityType="Self.DeTai" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GiangVien" EntityType="Self.GiangVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GiangVienChuyenNganh" EntityType="Self.GiangVienChuyenNganh" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GiangVienPhanBien" EntityType="Self.GiangVienPhanBien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HoiDongCham" EntityType="Self.HoiDongCham" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LoaiDeTai" EntityType="Self.LoaiDeTai" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LoaiDeTaiChuyenNganh" EntityType="Self.LoaiDeTaiChuyenNganh" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nhom" EntityType="Self.Nhom" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SinhVien" EntityType="Self.SinhVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ThongBao" EntityType="Self.ThongBao" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="fk_accountStudent" Association="Self.fk_accountStudent">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -406,44 +427,45 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_DeTai_ChuyenNganh_maChuyenNganh" Association="Self.FK_DeTai_ChuyenNganh_maChuyenNganh">
+            <End Role="ChuyenNganh" EntitySet="ChuyenNganh" />
+            <End Role="DeTai" EntitySet="DeTai" />
+          </AssociationSet>
           <AssociationSet Name="FK_DeTai_LoaiDeTai_loaiDeTai" Association="Self.FK_DeTai_LoaiDeTai_loaiDeTai">
             <End Role="LoaiDeTai" EntitySet="LoaiDeTai" />
             <End Role="DeTai" EntitySet="DeTai" />
           </AssociationSet>
-          <AssociationSet Name="FK_hoiDongCham_DeTai" Association="Self.FK_hoiDongCham_DeTai">
+          <AssociationSet Name="FK_GiangVienChuyenNganh_ChuyenNganh_maChuyenNganh" Association="Self.FK_GiangVienChuyenNganh_ChuyenNganh_maChuyenNganh">
+            <End Role="ChuyenNganh" EntitySet="ChuyenNganh" />
+            <End Role="GiangVienChuyenNganh" EntitySet="GiangVienChuyenNganh" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GiangVienPhanBien_DeTai_maDeTai" Association="Self.FK_GiangVienPhanBien_DeTai_maDeTai">
+            <End Role="DeTai" EntitySet="DeTai" />
+            <End Role="GiangVienPhanBien" EntitySet="GiangVienPhanBien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HoiDongCham_DeTai_maDeTai" Association="Self.FK_HoiDongCham_DeTai_maDeTai">
             <End Role="DeTai" EntitySet="DeTai" />
             <End Role="HoiDongCham" EntitySet="HoiDongCham" />
           </AssociationSet>
-          <AssociationSet Name="fk_loaiDeTai_chuyenNganh" Association="Self.fk_loaiDeTai_chuyenNganh">
-            <End Role="ChuyenNganh" EntitySet="ChuyenNganh" />
-            <End Role="LoaiDeTai" EntitySet="LoaiDeTai" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LoaiDeTaiChuyenNganh_ChuyenNganh_maChuyenNganh" Association="Self.FK_LoaiDeTaiChuyenNganh_ChuyenNganh_maChuyenNganh">
-            <End Role="ChuyenNganh" EntitySet="ChuyenNganh" />
-            <End Role="LoaiDeTaiChuyenNganh" EntitySet="LoaiDeTaiChuyenNganh" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LoaiDeTaiChuyenNganh_LoaiDeTai_maLoaiDeTai" Association="Self.FK_LoaiDeTaiChuyenNganh_LoaiDeTai_maLoaiDeTai">
-            <End Role="LoaiDeTai" EntitySet="LoaiDeTai" />
-            <End Role="LoaiDeTaiChuyenNganh" EntitySet="LoaiDeTaiChuyenNganh" />
-          </AssociationSet>
-          <AssociationSet Name="fk_nhomDeTai" Association="Self.fk_nhomDeTai">
+          <AssociationSet Name="FK_Nhom_DeTai_maDeTai" Association="Self.FK_Nhom_DeTai_maDeTai">
             <End Role="DeTai" EntitySet="DeTai" />
             <End Role="Nhom" EntitySet="Nhom" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PhanBien_DeTai" Association="Self.FK_PhanBien_DeTai">
-            <End Role="DeTai" EntitySet="DeTai" />
-            <End Role="GiangVienPhanBien" EntitySet="GiangVienPhanBien" />
           </AssociationSet>
           <AssociationSet Name="fk_sinhVien_chuyenNganh" Association="Self.fk_sinhVien_chuyenNganh">
             <End Role="ChuyenNganh" EntitySet="ChuyenNganh" />
             <End Role="SinhVien" EntitySet="SinhVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBao_LoaiDeTai_maLoaiDeTai" Association="Self.FK_ThongBao_LoaiDeTai_maLoaiDeTai">
+            <End Role="LoaiDeTai" EntitySet="LoaiDeTai" />
+            <End Role="ThongBao" EntitySet="ThongBao" />
           </AssociationSet>
           <AssociationSet Name="fk_truongBoMon" Association="Self.fk_truongBoMon">
             <End Role="GiangVien" EntitySet="GiangVien" />
             <End Role="ChuyenNganh" EntitySet="ChuyenNganh" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLyDeTaiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -515,10 +537,10 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <Property Name="maChuyenNganh" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="tenChuyenNganh" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="truongBoMon" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="LoaiDeTais" Relationship="Self.fk_loaiDeTai_chuyenNganh" FromRole="ChuyenNganh" ToRole="LoaiDeTai" />
+          <NavigationProperty Name="DeTais" Relationship="Self.FK_DeTai_ChuyenNganh_maChuyenNganh" FromRole="ChuyenNganh" ToRole="DeTai" />
+          <NavigationProperty Name="GiangVienChuyenNganhs" Relationship="Self.FK_GiangVienChuyenNganh_ChuyenNganh_maChuyenNganh" FromRole="ChuyenNganh" ToRole="GiangVienChuyenNganh" />
           <NavigationProperty Name="SinhViens" Relationship="Self.fk_sinhVien_chuyenNganh" FromRole="ChuyenNganh" ToRole="SinhVien" />
           <NavigationProperty Name="GiangVien" Relationship="Self.fk_truongBoMon" FromRole="ChuyenNganh" ToRole="GiangVien" />
-          <NavigationProperty Name="LoaiDeTais1" Relationship="Self.LoaiDeTaiChuyenNganh" FromRole="ChuyenNganh" ToRole="LoaiDeTai" />
         </EntityType>
         <EntityType Name="DeTai">
           <Key>
@@ -537,10 +559,13 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <Property Name="diem" Type="Double" />
           <Property Name="truongNhom" Type="Int32" />
           <Property Name="gvHuongDan" Type="Int32" />
+          <Property Name="TrangThai" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="maChuyenNganh" Type="Int32" />
+          <NavigationProperty Name="ChuyenNganh" Relationship="Self.FK_DeTai_ChuyenNganh_maChuyenNganh" FromRole="DeTai" ToRole="ChuyenNganh" />
           <NavigationProperty Name="LoaiDeTai1" Relationship="Self.FK_DeTai_LoaiDeTai_loaiDeTai" FromRole="DeTai" ToRole="LoaiDeTai" />
-          <NavigationProperty Name="HoiDongChams" Relationship="Self.FK_hoiDongCham_DeTai" FromRole="DeTai" ToRole="HoiDongCham" />
-          <NavigationProperty Name="Nhoms" Relationship="Self.fk_nhomDeTai" FromRole="DeTai" ToRole="Nhom" />
-          <NavigationProperty Name="GiangVienPhanBiens" Relationship="Self.FK_PhanBien_DeTai" FromRole="DeTai" ToRole="GiangVienPhanBien" />
+          <NavigationProperty Name="GiangVienPhanBiens" Relationship="Self.FK_GiangVienPhanBien_DeTai_maDeTai" FromRole="DeTai" ToRole="GiangVienPhanBien" />
+          <NavigationProperty Name="HoiDongChams" Relationship="Self.FK_HoiDongCham_DeTai_maDeTai" FromRole="DeTai" ToRole="HoiDongCham" />
+          <NavigationProperty Name="Nhoms" Relationship="Self.FK_Nhom_DeTai_maDeTai" FromRole="DeTai" ToRole="Nhom" />
         </EntityType>
         <EntityType Name="GiangVien">
           <Key>
@@ -553,23 +578,34 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <NavigationProperty Name="AspNetUser" Relationship="Self.fk_accountTeacher" FromRole="GiangVien" ToRole="AspNetUsers" />
           <NavigationProperty Name="ChuyenNganhs" Relationship="Self.fk_truongBoMon" FromRole="GiangVien" ToRole="ChuyenNganh" />
         </EntityType>
+        <EntityType Name="GiangVienChuyenNganh">
+          <Key>
+            <PropertyRef Name="maChuyenNganh" />
+            <PropertyRef Name="maGiangVien" />
+          </Key>
+          <Property Name="maChuyenNganh" Type="Int32" Nullable="false" />
+          <Property Name="maGiangVien" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ChuyenNganh" Relationship="Self.FK_GiangVienChuyenNganh_ChuyenNganh_maChuyenNganh" FromRole="GiangVienChuyenNganh" ToRole="ChuyenNganh" />
+        </EntityType>
         <EntityType Name="GiangVienPhanBien">
           <Key>
-            <PropertyRef Name="maPhanBien" />
+            <PropertyRef Name="maGiangVien" />
+            <PropertyRef Name="maDeTai" />
           </Key>
-          <Property Name="maPhanBien" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="maGiangVien" Type="Int32" />
-          <Property Name="maDeTai" Type="Int32" />
-          <NavigationProperty Name="DeTai" Relationship="Self.FK_PhanBien_DeTai" FromRole="GiangVienPhanBien" ToRole="DeTai" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="maGiangVien" Type="Int32" Nullable="false" />
+          <Property Name="maDeTai" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DeTai" Relationship="Self.FK_GiangVienPhanBien_DeTai_maDeTai" FromRole="GiangVienPhanBien" ToRole="DeTai" />
         </EntityType>
         <EntityType Name="HoiDongCham">
           <Key>
-            <PropertyRef Name="maHoiDong" />
+            <PropertyRef Name="maGiangVien" />
+            <PropertyRef Name="maDeTai" />
           </Key>
-          <Property Name="maHoiDong" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="maDeTai" Type="Int32" />
-          <Property Name="soLuongGV" Type="Int32" />
-          <NavigationProperty Name="DeTai" Relationship="Self.FK_hoiDongCham_DeTai" FromRole="HoiDongCham" ToRole="DeTai" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="maGiangVien" Type="Int32" Nullable="false" />
+          <Property Name="maDeTai" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DeTai" Relationship="Self.FK_HoiDongCham_DeTai_maDeTai" FromRole="HoiDongCham" ToRole="DeTai" />
         </EntityType>
         <EntityType Name="LoaiDeTai">
           <Key>
@@ -579,20 +615,18 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <Property Name="tenLoaiDeTai" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="nienKhoa" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="hocKy" Type="Int32" />
-          <Property Name="maChuyenNganh" Type="Int32" />
-          <NavigationProperty Name="ChuyenNganh" Relationship="Self.fk_loaiDeTai_chuyenNganh" FromRole="LoaiDeTai" ToRole="ChuyenNganh" />
           <NavigationProperty Name="DeTais" Relationship="Self.FK_DeTai_LoaiDeTai_loaiDeTai" FromRole="LoaiDeTai" ToRole="DeTai" />
-          <NavigationProperty Name="ChuyenNganhs" Relationship="Self.LoaiDeTaiChuyenNganh" FromRole="LoaiDeTai" ToRole="ChuyenNganh" />
+          <NavigationProperty Name="ThongBaos" Relationship="Self.FK_ThongBao_LoaiDeTai_maLoaiDeTai" FromRole="LoaiDeTai" ToRole="ThongBao" />
         </EntityType>
         <EntityType Name="Nhom">
           <Key>
-            <PropertyRef Name="maNhom" />
+            <PropertyRef Name="maDeTai" />
+            <PropertyRef Name="MSSV" />
           </Key>
-          <Property Name="maNhom" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="maNhomTruong" Type="Int32" />
-          <Property Name="soLuongSv" Type="Int32" />
-          <Property Name="maDeTai" Type="Int32" />
-          <NavigationProperty Name="DeTai" Relationship="Self.fk_nhomDeTai" FromRole="Nhom" ToRole="DeTai" />
+          <Property Name="maDeTai" Type="Int32" Nullable="false" />
+          <Property Name="MSSV" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="DeTai" Relationship="Self.FK_Nhom_DeTai_maDeTai" FromRole="Nhom" ToRole="DeTai" />
         </EntityType>
         <EntityType Name="SinhVien">
           <Key>
@@ -605,6 +639,16 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <NavigationProperty Name="AspNetUser" Relationship="Self.fk_accountStudent" FromRole="SinhVien" ToRole="AspNetUsers" />
           <NavigationProperty Name="ChuyenNganh" Relationship="Self.fk_sinhVien_chuyenNganh" FromRole="SinhVien" ToRole="ChuyenNganh" />
         </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="ThongBao">
           <Key>
             <PropertyRef Name="maThongBao" />
@@ -616,6 +660,8 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <Property Name="trangThai" Type="Byte" />
           <Property Name="ngayTao" Type="DateTime" Precision="3" />
           <Property Name="fileDinhKem" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="maLoaiDeTai" Type="Int32" />
+          <NavigationProperty Name="LoaiDeTai" Relationship="Self.FK_ThongBao_LoaiDeTai_maLoaiDeTai" FromRole="ThongBao" ToRole="LoaiDeTai" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -669,14 +715,26 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_loaiDeTai_chuyenNganh">
+        <Association Name="FK_DeTai_ChuyenNganh_maChuyenNganh">
           <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="0..1" />
-          <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="*" />
+          <End Role="DeTai" Type="Self.DeTai" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ChuyenNganh">
               <PropertyRef Name="maChuyenNganh" />
             </Principal>
-            <Dependent Role="LoaiDeTai">
+            <Dependent Role="DeTai">
+              <PropertyRef Name="maChuyenNganh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GiangVienChuyenNganh_ChuyenNganh_maChuyenNganh">
+          <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="1" />
+          <End Role="GiangVienChuyenNganh" Type="Self.GiangVienChuyenNganh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuyenNganh">
+              <PropertyRef Name="maChuyenNganh" />
+            </Principal>
+            <Dependent Role="GiangVienChuyenNganh">
               <PropertyRef Name="maChuyenNganh" />
             </Dependent>
           </ReferentialConstraint>
@@ -717,32 +775,8 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_hoiDongCham_DeTai">
-          <End Role="DeTai" Type="Self.DeTai" Multiplicity="0..1" />
-          <End Role="HoiDongCham" Type="Self.HoiDongCham" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DeTai">
-              <PropertyRef Name="maDeTai" />
-            </Principal>
-            <Dependent Role="HoiDongCham">
-              <PropertyRef Name="maDeTai" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_nhomDeTai">
-          <End Role="DeTai" Type="Self.DeTai" Multiplicity="0..1" />
-          <End Role="Nhom" Type="Self.Nhom" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DeTai">
-              <PropertyRef Name="maDeTai" />
-            </Principal>
-            <Dependent Role="Nhom">
-              <PropertyRef Name="maDeTai" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PhanBien_DeTai">
-          <End Role="DeTai" Type="Self.DeTai" Multiplicity="0..1" />
+        <Association Name="FK_GiangVienPhanBien_DeTai_maDeTai">
+          <End Role="DeTai" Type="Self.DeTai" Multiplicity="1" />
           <End Role="GiangVienPhanBien" Type="Self.GiangVienPhanBien" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DeTai">
@@ -753,15 +787,47 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_HoiDongCham_DeTai_maDeTai">
+          <End Role="DeTai" Type="Self.DeTai" Multiplicity="1" />
+          <End Role="HoiDongCham" Type="Self.HoiDongCham" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeTai">
+              <PropertyRef Name="maDeTai" />
+            </Principal>
+            <Dependent Role="HoiDongCham">
+              <PropertyRef Name="maDeTai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nhom_DeTai_maDeTai">
+          <End Role="DeTai" Type="Self.DeTai" Multiplicity="1" />
+          <End Role="Nhom" Type="Self.Nhom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeTai">
+              <PropertyRef Name="maDeTai" />
+            </Principal>
+            <Dependent Role="Nhom">
+              <PropertyRef Name="maDeTai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBao_LoaiDeTai_maLoaiDeTai">
+          <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="0..1" />
+          <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoaiDeTai">
+              <PropertyRef Name="maLoaiDeTai" />
+            </Principal>
+            <Dependent Role="ThongBao">
+              <PropertyRef Name="maLoaiDeTai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <Association Name="LoaiDeTaiChuyenNganh">
-          <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="*" />
-          <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="*" />
-        </Association>
-        <EntityContainer Name="QuanLyDeTaiEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="QuanLyDeTaiEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
@@ -770,11 +836,13 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <EntitySet Name="ChuyenNganhs" EntityType="Self.ChuyenNganh" />
           <EntitySet Name="DeTais" EntityType="Self.DeTai" />
           <EntitySet Name="GiangViens" EntityType="Self.GiangVien" />
+          <EntitySet Name="GiangVienChuyenNganhs" EntityType="Self.GiangVienChuyenNganh" />
           <EntitySet Name="GiangVienPhanBiens" EntityType="Self.GiangVienPhanBien" />
           <EntitySet Name="HoiDongChams" EntityType="Self.HoiDongCham" />
           <EntitySet Name="LoaiDeTais" EntityType="Self.LoaiDeTai" />
           <EntitySet Name="Nhoms" EntityType="Self.Nhom" />
           <EntitySet Name="SinhViens" EntityType="Self.SinhVien" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="ThongBaos" EntityType="Self.ThongBao" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -792,9 +860,13 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="GiangVien" EntitySet="GiangViens" />
           </AssociationSet>
-          <AssociationSet Name="fk_loaiDeTai_chuyenNganh" Association="Self.fk_loaiDeTai_chuyenNganh">
+          <AssociationSet Name="FK_DeTai_ChuyenNganh_maChuyenNganh" Association="Self.FK_DeTai_ChuyenNganh_maChuyenNganh">
             <End Role="ChuyenNganh" EntitySet="ChuyenNganhs" />
-            <End Role="LoaiDeTai" EntitySet="LoaiDeTais" />
+            <End Role="DeTai" EntitySet="DeTais" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GiangVienChuyenNganh_ChuyenNganh_maChuyenNganh" Association="Self.FK_GiangVienChuyenNganh_ChuyenNganh_maChuyenNganh">
+            <End Role="ChuyenNganh" EntitySet="ChuyenNganhs" />
+            <End Role="GiangVienChuyenNganh" EntitySet="GiangVienChuyenNganhs" />
           </AssociationSet>
           <AssociationSet Name="fk_sinhVien_chuyenNganh" Association="Self.fk_sinhVien_chuyenNganh">
             <End Role="ChuyenNganh" EntitySet="ChuyenNganhs" />
@@ -808,25 +880,25 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             <End Role="LoaiDeTai" EntitySet="LoaiDeTais" />
             <End Role="DeTai" EntitySet="DeTais" />
           </AssociationSet>
-          <AssociationSet Name="FK_hoiDongCham_DeTai" Association="Self.FK_hoiDongCham_DeTai">
+          <AssociationSet Name="FK_GiangVienPhanBien_DeTai_maDeTai" Association="Self.FK_GiangVienPhanBien_DeTai_maDeTai">
+            <End Role="DeTai" EntitySet="DeTais" />
+            <End Role="GiangVienPhanBien" EntitySet="GiangVienPhanBiens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HoiDongCham_DeTai_maDeTai" Association="Self.FK_HoiDongCham_DeTai_maDeTai">
             <End Role="DeTai" EntitySet="DeTais" />
             <End Role="HoiDongCham" EntitySet="HoiDongChams" />
           </AssociationSet>
-          <AssociationSet Name="fk_nhomDeTai" Association="Self.fk_nhomDeTai">
+          <AssociationSet Name="FK_Nhom_DeTai_maDeTai" Association="Self.FK_Nhom_DeTai_maDeTai">
             <End Role="DeTai" EntitySet="DeTais" />
             <End Role="Nhom" EntitySet="Nhoms" />
           </AssociationSet>
-          <AssociationSet Name="FK_PhanBien_DeTai" Association="Self.FK_PhanBien_DeTai">
-            <End Role="DeTai" EntitySet="DeTais" />
-            <End Role="GiangVienPhanBien" EntitySet="GiangVienPhanBiens" />
+          <AssociationSet Name="FK_ThongBao_LoaiDeTai_maLoaiDeTai" Association="Self.FK_ThongBao_LoaiDeTai_maLoaiDeTai">
+            <End Role="LoaiDeTai" EntitySet="LoaiDeTais" />
+            <End Role="ThongBao" EntitySet="ThongBaos" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="LoaiDeTaiChuyenNganh" Association="Self.LoaiDeTaiChuyenNganh">
-            <End Role="ChuyenNganh" EntitySet="ChuyenNganhs" />
-            <End Role="LoaiDeTai" EntitySet="LoaiDeTais" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -834,7 +906,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="QuanLyDeTaiModelStoreContainer" CdmEntityContainer="QuanLyDeTaiEntities1">
+        <EntityContainerMapping StorageEntityContainer="QuanLyDeTaiModelStoreContainer" CdmEntityContainer="QuanLyDeTaiEntities">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="QuanLyDeTaiModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -915,6 +987,8 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
                 <ScalarProperty Name="diem" ColumnName="diem" />
                 <ScalarProperty Name="truongNhom" ColumnName="truongNhom" />
                 <ScalarProperty Name="gvHuongDan" ColumnName="gvHuongDan" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="maChuyenNganh" ColumnName="maChuyenNganh" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -928,10 +1002,18 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="GiangVienChuyenNganhs">
+            <EntityTypeMapping TypeName="QuanLyDeTaiModel.GiangVienChuyenNganh">
+              <MappingFragment StoreEntitySet="GiangVienChuyenNganh">
+                <ScalarProperty Name="maChuyenNganh" ColumnName="maChuyenNganh" />
+                <ScalarProperty Name="maGiangVien" ColumnName="maGiangVien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="GiangVienPhanBiens">
             <EntityTypeMapping TypeName="QuanLyDeTaiModel.GiangVienPhanBien">
               <MappingFragment StoreEntitySet="GiangVienPhanBien">
-                <ScalarProperty Name="maPhanBien" ColumnName="maPhanBien" />
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="maGiangVien" ColumnName="maGiangVien" />
                 <ScalarProperty Name="maDeTai" ColumnName="maDeTai" />
               </MappingFragment>
@@ -940,9 +1022,9 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <EntitySetMapping Name="HoiDongChams">
             <EntityTypeMapping TypeName="QuanLyDeTaiModel.HoiDongCham">
               <MappingFragment StoreEntitySet="HoiDongCham">
-                <ScalarProperty Name="maHoiDong" ColumnName="maHoiDong" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="maGiangVien" ColumnName="maGiangVien" />
                 <ScalarProperty Name="maDeTai" ColumnName="maDeTai" />
-                <ScalarProperty Name="soLuongGV" ColumnName="soLuongGV" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -953,17 +1035,15 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
                 <ScalarProperty Name="tenLoaiDeTai" ColumnName="tenLoaiDeTai" />
                 <ScalarProperty Name="nienKhoa" ColumnName="nienKhoa" />
                 <ScalarProperty Name="hocKy" ColumnName="hocKy" />
-                <ScalarProperty Name="maChuyenNganh" ColumnName="maChuyenNganh" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Nhoms">
             <EntityTypeMapping TypeName="QuanLyDeTaiModel.Nhom">
               <MappingFragment StoreEntitySet="Nhom">
-                <ScalarProperty Name="maNhom" ColumnName="maNhom" />
-                <ScalarProperty Name="maNhomTruong" ColumnName="maNhomTruong" />
-                <ScalarProperty Name="soLuongSv" ColumnName="soLuongSv" />
                 <ScalarProperty Name="maDeTai" ColumnName="maDeTai" />
+                <ScalarProperty Name="MSSV" ColumnName="MSSV" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -977,16 +1057,28 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="QuanLyDeTaiModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ThongBaos">
             <EntityTypeMapping TypeName="QuanLyDeTaiModel.ThongBao">
               <MappingFragment StoreEntitySet="ThongBao">
-                <ScalarProperty Name="fileDinhKem" ColumnName="fileDinhKem" />
                 <ScalarProperty Name="maThongBao" ColumnName="maThongBao" />
                 <ScalarProperty Name="tieuDe" ColumnName="tieuDe" />
                 <ScalarProperty Name="moTa" ColumnName="moTa" />
                 <ScalarProperty Name="noiDung" ColumnName="noiDung" />
                 <ScalarProperty Name="trangThai" ColumnName="trangThai" />
                 <ScalarProperty Name="ngayTao" ColumnName="ngayTao" />
+                <ScalarProperty Name="fileDinhKem" ColumnName="fileDinhKem" />
+                <ScalarProperty Name="maLoaiDeTai" ColumnName="maLoaiDeTai" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -996,14 +1088,6 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             </EndProperty>
             <EndProperty Name="AspNetUsers">
               <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="LoaiDeTaiChuyenNganh" TypeName="QuanLyDeTaiModel.LoaiDeTaiChuyenNganh" StoreEntitySet="LoaiDeTaiChuyenNganh">
-            <EndProperty Name="ChuyenNganh">
-              <ScalarProperty Name="maChuyenNganh" ColumnName="maChuyenNganh" />
-            </EndProperty>
-            <EndProperty Name="LoaiDeTai">
-              <ScalarProperty Name="maLoaiDeTai" ColumnName="maLoaiDeTai" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

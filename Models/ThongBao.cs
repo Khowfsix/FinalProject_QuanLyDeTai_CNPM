@@ -21,5 +21,8 @@ namespace QuanLyDeTai.Models
         public Nullable<byte> trangThai { get; set; }
         public Nullable<System.DateTime> ngayTao { get; set; }
         public string fileDinhKem { get; set; }
+        public Nullable<int> maLoaiDeTai { get; set; }
+    
+        public virtual LoaiDeTai LoaiDeTai { get; set; }
     }
 }
