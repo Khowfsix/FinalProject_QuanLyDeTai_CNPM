@@ -1,0 +1,47 @@
+﻿@model QuanLyDeTai.Models.Nhom
+
+@{
+    ViewBag.Title = "Xóa thành viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Xóa thành viên</h2>
+
+<h3>Bạn muốn xóa sinh viên này ra khỏi nhóm?</h3>
+<div>
+    <h4>Sinh viên</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.Hidden("Id")
+        </dt>
+
+        <dd>
+            @Html.HiddenFor(model => model.id)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Tên đề tài")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeTai.tenDeTai)
+        </dd>
+        <dt>
+            @Html.DisplayName("Mã số sinh viên")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MSSV)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default" /> |
+          @Html.ActionLink("Quay lại danh sách", "DanhSachThanhVien", new { maDeTai = ViewBag.maDeTai })
+        </div>
+    }
+</div>

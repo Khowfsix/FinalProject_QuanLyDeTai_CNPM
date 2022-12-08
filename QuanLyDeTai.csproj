@@ -258,6 +258,11 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewsModel\DeTaisViewsModel.cs" />
+    <Compile Include="ViewsModel\DotDangKy.cs" />
+    <Compile Include="ViewsModel\FutureDate.cs" />
+    <Compile Include="ViewsModel\NhomsViewsModel.cs" />
+    <Compile Include="ViewsModel\ValidTime.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -345,11 +350,6 @@
     <Content Include="Views\GiangViens\Details.cshtml" />
     <Content Include="Views\GiangViens\Edit.cshtml" />
     <Content Include="Views\GiangViens\Index.cshtml" />
-    <Content Include="Views\LoaiDeTais\Create.cshtml" />
-    <Content Include="Views\LoaiDeTais\Delete.cshtml" />
-    <Content Include="Views\LoaiDeTais\Details.cshtml" />
-    <Content Include="Views\LoaiDeTais\Edit.cshtml" />
-    <Content Include="Views\LoaiDeTais\Index.cshtml" />
     <Content Include="Views\DeTais\Create.cshtml" />
     <Content Include="Views\DeTais\Delete.cshtml" />
     <Content Include="Views\DeTais\Details.cshtml" />
@@ -360,11 +360,7 @@
     <Content Include="Views\ChuyenNganhs\Details.cshtml" />
     <Content Include="Views\ChuyenNganhs\Edit.cshtml" />
     <Content Include="Views\ChuyenNganhs\Index.cshtml" />
-    <Content Include="Views\Nhoms\Create.cshtml" />
-    <Content Include="Views\Nhoms\Delete.cshtml" />
-    <Content Include="Views\Nhoms\Details.cshtml" />
-    <Content Include="Views\Nhoms\Edit.cshtml" />
-    <Content Include="Views\Nhoms\Index.cshtml" />
+    <Content Include="Views\Nhoms\DanhSachThanhVien.cshtml" />
     <Content Include="Views\GiangVienPhanBiens\Create.cshtml" />
     <Content Include="Views\GiangVienPhanBiens\Delete.cshtml" />
     <Content Include="Views\GiangVienPhanBiens\Details.cshtml" />
@@ -380,7 +376,25 @@
     <Content Include="Views\ThongBaos\Details.cshtml" />
     <Content Include="Views\ThongBaos\Edit.cshtml" />
     <Content Include="Views\ThongBaos\Index.cshtml" />
+    <Content Include="Views\DeTais\MenuAction.cshtml" />
+    <Content Include="Views\Nhoms\Create.cshtml" />
+    <Content Include="Views\Nhoms\Delete.cshtml" />
+    <Content Include="Views\Nhoms\Details.cshtml" />
+    <Content Include="Views\Nhoms\Edit.cshtml" />
+    <Content Include="Views\Nhoms\Index.cshtml" />
+    <Content Include="Views\Nhoms\ThemThanhVien.cshtml" />
+    <Content Include="Views\SinhViens\XemThongTin.cshtml" />
+    <Content Include="Views\SinhViens\SuaThongTin.cshtml" />
+    <Content Include="Views\Nhoms\XoaThanhVien.cshtml" />
+    <Content Include="Views\LoaiDeTais\Create.cshtml" />
+    <Content Include="Views\LoaiDeTais\Delete.cshtml" />
+    <Content Include="Views\LoaiDeTais\Details.cshtml" />
+    <Content Include="Views\LoaiDeTais\Edit.cshtml" />
+    <Content Include="Views\LoaiDeTais\Index.cshtml" />
     <Content Include="Views\LoaiDeTais\ChonLoaiDeTai.cshtml" />
+    <Content Include="Views\LoaiDeTais\TaoDotDangKy.cshtml" />
+    <Content Include="Views\LoaiDeTais\DanhSachDotDangKy.cshtml" />
+    <Content Include="Views\LoaiDeTais\XoaDotDangKy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

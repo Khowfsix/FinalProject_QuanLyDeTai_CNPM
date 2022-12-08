@@ -125,6 +125,8 @@
     <EntitySetMapping Name="LoaiDeTais">
       <EntityTypeMapping TypeName="QuanLyDeTaiModel.LoaiDeTai">
         <MappingFragment StoreEntitySet="LoaiDeTai">
+          <ScalarProperty Name="tgKetThuc" ColumnName="tgKetThuc" />
+          <ScalarProperty Name="tgDangKy" ColumnName="tgDangKy" />
           <ScalarProperty Name="maLoaiDeTai" ColumnName="maLoaiDeTai" />
           <ScalarProperty Name="tenLoaiDeTai" ColumnName="tenLoaiDeTai" />
           <ScalarProperty Name="nienKhoa" ColumnName="nienKhoa" />

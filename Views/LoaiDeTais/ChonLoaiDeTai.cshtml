@@ -15,19 +15,31 @@
         <th>
             @Html.DisplayName("Tên loại đề tài")
         </th>
+        <th>
+            @Html.DisplayName("Thời gian đăng ký")
+        </th>
+        <th>
+            @Html.DisplayName("Thời gian kết thúc")
+        </th>
     </tr>
     @{int i = 0;}
     @foreach (var item in Model)
     {
         i = i + 1;
-        <tr>
-            <td>
-                @i
-            </td>
-            <td>
-                @Html.ActionLink(item.tenLoaiDeTai, "getListDeTaisByLoaiDeTai", "Detais", new { maLoaiDeTai = item.maLoaiDeTai }, null)
-            </td>
-        </tr>
+<tr>
+    <td>
+        @i
+    </td>
+    <td>
+        @Html.ActionLink(item.tenLoaiDeTai, "getListDeTaisByLoaiDeTai", "Detais", new { maLoaiDeTai = item.maLoaiDeTai }, null)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.tgDangKy)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.tgKetThuc)
+    </td>
+</tr>
     }
 
 </table>

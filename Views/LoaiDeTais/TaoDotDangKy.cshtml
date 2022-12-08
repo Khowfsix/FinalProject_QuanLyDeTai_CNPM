@@ -1,0 +1,68 @@
+﻿@model QuanLyDeTai.ViewsModel.DotDangKy
+
+@{
+    ViewBag.Title = "Tạo đợt đăng ký";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Tạo đợt đăng ký</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Đợt đăng ký</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.maLoaiDeTai, "Loại đề tài", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("maLoaiDeTai", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.maLoaiDeTai, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    
+    <div class="form-group">        
+        @Html.LabelFor(model => model.gioBatDau, "Giờ bắt đầu (HH:mm:ss)", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.gioBatDau, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.gioBatDau, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">        
+        @Html.LabelFor(model => model.gioKetThuc, "Giờ kết thúc (HH:mm:ss)", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.gioKetThuc, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.gioKetThuc, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ngayBatDau, "Ngày bắt đầu (MM/dd/yyyy)", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ngayBatDau, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ngayBatDau, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ngayKetThuc, "Ngày kết thúc (MM/dd/yyyy)", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ngayKetThuc, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ngayKetThuc, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Thêm" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Quay lại", "MenuAction", "DeTais")
+</div>

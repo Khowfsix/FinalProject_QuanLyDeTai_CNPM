@@ -7,9 +7,15 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Thêm đề tài", "Create")
-</p>
+@{
+    if (User.IsInRole("Admin"))
+    {
+        <p>
+            @Html.ActionLink("Thêm đề tài", "Create")
+        </p>
+    }
+}
+
 <table class="table">
     <tr>
         <th>
@@ -54,7 +60,9 @@
         <th>
             @Html.DisplayName("Loại đề tài")
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayName("Hành động")
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -79,7 +87,7 @@
                 @Html.DisplayFor(modelItem => item.soLuongSinhVienToiDa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.duocDangKyKhacChuyenNganh)
+                @(item.duocDangKyKhacChuyenNganh == true ? "Có" : "Không")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.nienKhoa)
@@ -103,9 +111,47 @@
                 @Html.DisplayFor(modelItem => item.LoaiDeTai1.tenLoaiDeTai)
             </td>
             <td>
-                @Html.ActionLink("Sửa", "Edit", new { id = item.maDeTai }) |
+                @if (User.IsInRole("Admin"))
+                {
+                    <span>
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.maDeTai }) |
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.maDeTai }) |
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.maDeTai });
+                    </span>
+                }
+                @if (User.IsInRole("Sinh viên"))
+                {
+            <span>
                 @Html.ActionLink("Chi tiết", "Details", new { id = item.maDeTai }) |
-                @Html.ActionLink("Xóa", "Delete", new { id = item.maDeTai })
+
+                @if (DateTime.Now > item.LoaiDeTai1.tgDangKy && DateTime.Now < item.LoaiDeTai1.tgKetThuc)
+                {
+                    if (item.Nhoms.Select(p => p.MSSV).ToList().Contains(ViewBag.masinhvien))
+                    {
+                        @Html.ActionLink("Hủy đăng ký", "SinhVienHuyDangKy", new { maDeTai = item.maDeTai }, new { style = "color: red;" })
+                    }
+                    else
+                    {
+                        if (item.truongNhom.HasValue == false)
+                        {
+                            @Html.ActionLink("Đăng ký ", "SinhVienDangKy", new { maDeTai = item.maDeTai }, new { style = "color: green;" });
+                        }
+                    }
+                }
+
+
+
+            </span>
+                }
+                @if (User.IsInRole("Giảng viên"))
+                {
+                <span>
+                    @Html.ActionLink("Chi tiết", "Details", new { id = item.maDeTai })
+                    
+                </span>
+                }
+
+
             </td>
         </tr>
     }

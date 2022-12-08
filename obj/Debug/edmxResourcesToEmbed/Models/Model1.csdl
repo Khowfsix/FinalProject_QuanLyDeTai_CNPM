@@ -148,6 +148,8 @@
     <Property Name="hocKy" Type="Int32" />
     <NavigationProperty Name="DeTais" Relationship="Self.FK_DeTai_LoaiDeTai_loaiDeTai" FromRole="LoaiDeTai" ToRole="DeTai" />
     <NavigationProperty Name="ThongBaos" Relationship="Self.FK_ThongBao_LoaiDeTai_maLoaiDeTai" FromRole="LoaiDeTai" ToRole="ThongBao" />
+    <Property Name="tgDangKy" Type="DateTime" Precision="3" />
+    <Property Name="tgKetThuc" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="Nhom">
     <Key>

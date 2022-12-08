@@ -132,6 +132,8 @@
     <Property Name="tenLoaiDeTai" Type="nvarchar" MaxLength="256" />
     <Property Name="nienKhoa" Type="nvarchar" MaxLength="256" />
     <Property Name="hocKy" Type="int" />
+    <Property Name="tgDangKy" Type="datetime" />
+    <Property Name="tgKetThuc" Type="datetime" />
   </EntityType>
   <EntityType Name="Nhom">
     <Key>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QuanLyDeTaiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QuanLyDeTaiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -137,6 +137,8 @@
           <Property Name="tenLoaiDeTai" Type="nvarchar" MaxLength="256" />
           <Property Name="nienKhoa" Type="nvarchar" MaxLength="256" />
           <Property Name="hocKy" Type="int" />
+          <Property Name="tgDangKy" Type="datetime" />
+          <Property Name="tgKetThuc" Type="datetime" />
         </EntityType>
         <EntityType Name="Nhom">
           <Key>
@@ -464,8 +466,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien_MSSV' has columns that are not 
             <End Role="ChuyenNganh" EntitySet="ChuyenNganh" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLyDeTaiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -617,6 +618,8 @@ warning 6035: The relationship 'FK_Nhom_SinhVien_MSSV' has columns that are not 
           <Property Name="hocKy" Type="Int32" />
           <NavigationProperty Name="DeTais" Relationship="Self.FK_DeTai_LoaiDeTai_loaiDeTai" FromRole="LoaiDeTai" ToRole="DeTai" />
           <NavigationProperty Name="ThongBaos" Relationship="Self.FK_ThongBao_LoaiDeTai_maLoaiDeTai" FromRole="LoaiDeTai" ToRole="ThongBao" />
+          <Property Name="tgDangKy" Type="DateTime" Precision="3" />
+          <Property Name="tgKetThuc" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Nhom">
           <Key>
@@ -1031,6 +1034,8 @@ warning 6035: The relationship 'FK_Nhom_SinhVien_MSSV' has columns that are not 
           <EntitySetMapping Name="LoaiDeTais">
             <EntityTypeMapping TypeName="QuanLyDeTaiModel.LoaiDeTai">
               <MappingFragment StoreEntitySet="LoaiDeTai">
+                <ScalarProperty Name="tgKetThuc" ColumnName="tgKetThuc" />
+                <ScalarProperty Name="tgDangKy" ColumnName="tgDangKy" />
                 <ScalarProperty Name="maLoaiDeTai" ColumnName="maLoaiDeTai" />
                 <ScalarProperty Name="tenLoaiDeTai" ColumnName="tenLoaiDeTai" />
                 <ScalarProperty Name="nienKhoa" ColumnName="nienKhoa" />

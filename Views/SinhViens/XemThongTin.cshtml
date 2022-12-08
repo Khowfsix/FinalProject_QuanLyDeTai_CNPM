@@ -1,0 +1,62 @@
+﻿@model QuanLyDeTai.Models.SinhVien
+
+@{
+    ViewBag.Title = "Xem Thông Tin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Xem Thông Tin</h2>
+
+<div>
+    <h4>Sinh Viên</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Mã số sinh viên")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MSSV)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Họ và tên")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenSinhVien)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Email")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Chuyên ngành")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChuyenNganh.tenChuyenNganh)
+        </dd>
+
+    </dl>
+</div>
+
+@if (Model.MSSV == ViewBag.MSSV)
+{
+    <p>
+        @Html.ActionLink("Sửa", "SuaThongTin", new { maDeTai = ViewBag.maDeTai, id = ViewBag.MSSV }) |
+
+        @Html.ActionLink("Quay lại danh sách", "DanhSachThanhVien", "Nhoms", new { maDeTai = ViewBag.maDeTai }, null)
+    </p>
+}
+else
+{
+
+    @Html.ActionLink("Quay lại danh sách", "DanhSachThanhVien", "Nhoms", new { maDeTai = ViewBag.maDeTai }, null)
+}
+
