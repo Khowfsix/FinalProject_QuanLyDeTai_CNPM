@@ -8,7 +8,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Thêm chuyên ngành", "Create")
+    @Html.ActionLink("Thêm chuyên ngành mới", "Create")
 </p>
 <table class="table">
     <tr>
@@ -16,25 +16,26 @@
             @Html.DisplayName("Tên chuyên ngành")
         </th>
         <th>
-            @Html.DisplayName("Tên trưởng bộ môn")
+            @Html.DisplayName("Trưởng bộ môn")
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.tenChuyenNganh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GiangVien.tenGiangVien)
-        </td>
-        <td>
-            @Html.ActionLink("Sửa", "Edit", new { id=item.maChuyenNganh }) |
-            @Html.ActionLink("Chi tiết", "Details", new { id=item.maChuyenNganh }) |
-            @Html.ActionLink("Xóa", "Delete", new { id=item.maChuyenNganh })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tenChuyenNganh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiangVien.tenGiangVien)
+            </td>
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.maChuyenNganh }) |
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.maChuyenNganh }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.maChuyenNganh })
+            </td>
+        </tr>
+    }
 
 </table>

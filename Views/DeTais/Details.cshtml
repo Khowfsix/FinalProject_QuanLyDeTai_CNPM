@@ -1,14 +1,19 @@
 ﻿@model QuanLyDeTai.Models.DeTai
 
 @{
-    ViewBag.Title = "Chi tiết đề tài";
+    ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Chi tiết</h2>
 
 <div>
-    <h4>Đề tài</h4>
+    <h4>Chi tiết đề tài</h4>
+    @if (User.IsInRole("Sinh viên") && Model.truongNhom == null)
+    {
+        @Html.ActionLink("Đăng ký đề tài", "SinhVienDangKy", new { maDeTai = Model.maDeTai }, new { @class = "btn btn-primary", style = "font-size: 20px;" })
+    }
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -52,7 +57,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Số lượng sinh viên đăng ký tối đa")
+            @Html.DisplayName("Số lượng sinh viên tối đa")
         </dt>
 
         <dd>
@@ -60,11 +65,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Được đăng ký khách chuyên ngành")
+            @Html.DisplayName("Được đăng ký khác chuyên ngành")
         </dt>
 
         <dd>
-            @(Model.duocDangKyKhacChuyenNganh == true ? "Có" : "Không")
+            @Html.DisplayFor(model => model.duocDangKyKhacChuyenNganh)
         </dd>
 
         <dt>
@@ -88,24 +93,17 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.truongNhom)
+            @Html.DisplayFor(model => model.truongNhom) | @Html.ActionLink("Danh sách thành viên", "DanhSachThanhVien", "Nhoms", routeValues: new { maDeTai = Model.maDeTai }, htmlAttributes: null)
         </dd>
 
         <dt>
-            @Html.DisplayName("Mã giảng viên hướng dẫn")
+            @Html.DisplayName("Giảng viên hướng dẫn")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.gvHuongDan)
         </dd>
 
-        <dt>
-            @Html.DisplayName("Loại đề tài")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LoaiDeTai1.tenLoaiDeTai)
-        </dd>
         <dt>
             @Html.DisplayName("Trạng thái")
         </dt>
@@ -115,15 +113,35 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Chuyên ngành")
+            @Html.DisplayName("Tên chuyên ngành")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.ChuyenNganh.tenChuyenNganh)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Loại đề tài")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaiDeTai1.tenLoaiDeTai)
+        </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.maDeTai }) |
-    @Html.ActionLink("Quay về danh sách đề tài", "Index", new { id = Model.loaiDeTai })
+    @{
+        if (User.IsInRole("Admin, Trưởng Bộ Môn"))
+        {
+            if (Model.gvHuongDan == ViewBag.maGiangVien)
+            {
+                <span> @Html.ActionLink("Sửa", "Edit", new { id = Model.maDeTai }, htmlAttributes: new { Style = "Color: Green" }) |</span>
+                <span> @Html.ActionLink("Xóa", "Delete", new { id = Model.maDeTai }, htmlAttributes: new { Style = "Color: Red" }) |</span>
+            }
+
+        }
+    }
+
+    @Html.ActionLink("Quay lại danh sách", "Index")
 </p>

@@ -7,9 +7,6 @@
 
 <h2>ChonLoaiDeTai</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -18,18 +15,31 @@
         <th>
             @Html.DisplayName("Tên loại đề tài")
         </th>
+        <th>
+            @Html.DisplayName("Thời gian đăng ký")
+        </th>
+        <th>
+            @Html.DisplayName("Thời gian kết thúc")
+        </th>
     </tr>
-@{int i = 0;}
-@foreach (var item in Model) {
-    i = i + 1;
+    @{int i = 0;}
+    @foreach (var item in Model)
+    {
+        i = i + 1;
 <tr>
     <td>
         @i
     </td>
     <td>
-        @Html.ActionLink(item.tenLoaiDeTai, "Index", "Detais",  new { id=item.maLoaiDeTai }, null)
+        @Html.ActionLink(item.tenLoaiDeTai, "getListDeTaisByLoaiDeTai", "Detais", new { maLoaiDeTai = item.maLoaiDeTai }, null)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.tgDangKy)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.tgKetThuc)
     </td>
 </tr>
-}
+    }
 
 </table>

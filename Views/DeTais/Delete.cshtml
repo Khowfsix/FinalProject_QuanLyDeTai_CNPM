@@ -1,13 +1,13 @@
 ﻿@model QuanLyDeTai.Models.DeTai
 
 @{
-    ViewBag.Title = "Xóa đề tài";
+    ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>Xóa</h2>
 
-<h3>Bạn có chắc muốn xóa đề tài này?</h3>
+<h3>Bạn muốn xóa đề tài này?</h3>
 <div>
     <h4>Đề tài</h4>
     <hr />
@@ -53,7 +53,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Số lượng sinh viên đăng ký tối đa")
+            @Html.DisplayName("Số lượng sinh viên tối đa")
         </dt>
 
         <dd>
@@ -61,11 +61,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Được đăng ký khách chuyên ngành")
+            @Html.DisplayName("Được đăng ký khác chuyên ngành")
         </dt>
 
         <dd>
-            @(Model.duocDangKyKhacChuyenNganh == true ? "Có" : "Không")
+            @Html.DisplayFor(model => model.duocDangKyKhacChuyenNganh)
         </dd>
 
         <dt>
@@ -85,7 +85,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("MSSV trưởng nhóm")
+            @Html.DisplayName("Trưởng nhóm")
         </dt>
 
         <dd>
@@ -93,20 +93,13 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Mã giảng viên hướng dẫn")
+            @Html.DisplayName("Giảng viên hướng dẫn")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.gvHuongDan)
         </dd>
 
-        <dt>
-            @Html.DisplayName("Loại đề tài")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LoaiDeTai1.tenLoaiDeTai)
-        </dd>
         <dt>
             @Html.DisplayName("Trạng thái")
         </dt>
@@ -116,20 +109,30 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Chuyên ngành")
+            @Html.DisplayName("Tên chuyên ngành")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.ChuyenNganh.tenChuyenNganh)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Loại đề tài")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaiDeTai1.tenLoaiDeTai)
+        </dd>
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
             <input type="submit" value="Xóa" class="btn btn-default" /> |
-            @Html.ActionLink("Quay về danh sách đề tài", "Index", new { id = Model.loaiDeTai })
+            @Html.ActionLink("Quay lại danh sách", "Index")
         </div>
     }
 </div>

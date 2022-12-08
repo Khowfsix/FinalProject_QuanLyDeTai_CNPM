@@ -39,7 +39,9 @@ namespace QuanLyDeTai.Controllers
         // GET: ChuyenNganhs/Create
         public ActionResult Create()
         {
-            ViewBag.truongBoMon = new SelectList(db.GiangViens, "account_ID", "tenGiangVien");
+            List<GiangVien> listofGIANGVIEN = db.GiangViens.ToList();
+            listofGIANGVIEN.Add(null);
+            ViewBag.truongBoMon = new SelectList(listofGIANGVIEN, "account_ID", "tenGiangVien");
             return View();
         }
 
@@ -73,7 +75,9 @@ namespace QuanLyDeTai.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.truongBoMon = new SelectList(db.GiangViens, "account_ID", "tenGiangVien", chuyenNganh.truongBoMon);
+            List<GiangVien> listofGIANGVIEN = db.GiangViens.ToList();
+            listofGIANGVIEN.Add(null);
+            ViewBag.truongBoMon = new SelectList(listofGIANGVIEN, "account_ID", "tenGiangVien");
             return View(chuyenNganh);
         }
 

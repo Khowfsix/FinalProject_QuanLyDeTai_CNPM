@@ -7,11 +7,10 @@
 
 <h2>Sửa</h2>
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Chuyên ngành</h4>
         <hr />
@@ -19,7 +18,7 @@
         @Html.HiddenFor(model => model.maChuyenNganh)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.tenChuyenNganh, "Tên chuyên ngành",htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.tenChuyenNganh, "Tên chuyên ngành", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.tenChuyenNganh, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.tenChuyenNganh, "", new { @class = "text-danger" })
@@ -45,7 +44,3 @@
 <div>
     @Html.ActionLink("Quay lại danh sách", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

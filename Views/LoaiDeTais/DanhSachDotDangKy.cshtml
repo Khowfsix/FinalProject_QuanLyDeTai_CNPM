@@ -1,0 +1,43 @@
+﻿@model IEnumerable<QuanLyDeTai.Models.LoaiDeTai>
+
+@{
+    ViewBag.Title = "Danh sách";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh sách</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Tên loại đề tài")
+        </th>
+        <th>
+            @Html.DisplayName("Thời gian đăng ký")
+        </th>
+        <th>
+            @Html.DisplayName("Thời gian kết thúc")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tenLoaiDeTai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tgDangKy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tgKetThuc)
+            </td>
+            <td>
+                @Html.ActionLink("Xóa", "XoaDotDangKy", new { id = item.maLoaiDeTai })
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.ActionLink("Quay lại", "MenuAction", "DeTais")

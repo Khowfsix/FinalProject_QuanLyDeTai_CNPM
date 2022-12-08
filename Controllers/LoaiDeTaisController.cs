@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QuanLyDeTai.Models;
+using QuanLyDeTai.ViewsModel;
 
 namespace QuanLyDeTai.Controllers
 {
@@ -20,19 +22,87 @@ namespace QuanLyDeTai.Controllers
             var loaiDeTais = db.LoaiDeTais;
             return View(loaiDeTais.ToList());
         }
-        public ActionResult ChonLoaiDeTai()
+        public ActionResult DanhSachDotDangKy()
         {
-            var loaiDeTais = db.LoaiDeTais.Select(p => p);
+            var loaiDeTais = db.LoaiDeTais;
             return View(loaiDeTais.ToList());
-        }
-        // GET: LoaiDeTais/Details/5
-        public ActionResult Details(int? id)
+        }    
+        // GET: LoaiDeTais/Delete/5
+        public async Task<ActionResult> XoaDotDangKy(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LoaiDeTai loaiDeTai = db.LoaiDeTais.Find(id);
+            LoaiDeTai loaiDeTai = await db.LoaiDeTais.FindAsync(id);
+            if (loaiDeTai == null)
+            {
+                return HttpNotFound();
+            }
+            return View(loaiDeTai);
+        }
+
+        // POST: LoaiDeTais/Delete/5
+        [HttpPost, ActionName("XoaDotDangKy")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> XoaDotDangKyConfirmed(int id)
+        {
+            LoaiDeTai loaiDeTai = await db.LoaiDeTais.FindAsync(id);
+            loaiDeTai.tgKetThuc = null;
+            loaiDeTai.tgDangKy = null;
+            await db.SaveChangesAsync();
+            return RedirectToAction("DanhSachDotDangKy");
+        }
+        // GET: DeTais/Create
+        public ActionResult TaoDotDangKy()
+        {
+            ViewBag.maLoaiDeTai = new SelectList(db.LoaiDeTais, "maLoaiDeTai", "tenLoaiDeTai");
+            return View();
+        }
+
+        // POST: DeTais/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TaoDotDangKy([Bind(Include = "maLoaiDeTai,gioBatDau,gioKetThuc,ngayBatDau,ngayKetThuc")] DotDangKy dotDangKy)
+        {
+            if (ModelState.IsValid)
+            {
+
+                LoaiDeTai loaiDeTai = db.LoaiDeTais.Where(p => p.maLoaiDeTai == dotDangKy.maLoaiDeTai).FirstOrDefault();
+                DateTime temp = new DateTime();
+                var isValidDate = DateTime.TryParse(dotDangKy.ngayBatDau + " " + dotDangKy.gioBatDau, out temp);
+
+                if (isValidDate)
+                    loaiDeTai.tgDangKy = temp;
+
+                isValidDate = DateTime.TryParse(dotDangKy.ngayKetThuc + " " + dotDangKy.gioKetThuc, out temp);
+
+                if (isValidDate)
+                    loaiDeTai.tgKetThuc = temp;
+
+                db.SaveChanges();
+
+                return RedirectToAction("MenuAction", "DeTais");
+            }
+            ViewBag.maLoaiDeTai = new SelectList(db.LoaiDeTais, "maLoaiDeTai", "tenLoaiDeTai");
+            return View(dotDangKy);
+        }
+        public ActionResult ChonLoaiDeTai()
+        {
+            var loaiDeTais = db.LoaiDeTais.Select(p => p);
+            return View(loaiDeTais.ToList());
+        }
+
+        // GET: LoaiDeTais/Details/5
+        public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            LoaiDeTai loaiDeTai = await db.LoaiDeTais.FindAsync(id);
             if (loaiDeTai == null)
             {
                 return HttpNotFound();
@@ -43,7 +113,6 @@ namespace QuanLyDeTai.Controllers
         // GET: LoaiDeTais/Create
         public ActionResult Create()
         {
-            ViewBag.maChuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh");
             return View();
         }
 
@@ -52,32 +121,30 @@ namespace QuanLyDeTai.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "maLoaiDeTai,tenLoaiDeTai,nienKhoa,hocKy,maChuyenNganh")] LoaiDeTai loaiDeTai)
+        public async Task<ActionResult> Create([Bind(Include = "maLoaiDeTai,tenLoaiDeTai,nienKhoa,hocKy,tgDangKy,tgKetThuc")] LoaiDeTai loaiDeTai)
         {
             if (ModelState.IsValid)
             {
                 db.LoaiDeTais.Add(loaiDeTai);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.maChuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh");
             return View(loaiDeTai);
         }
 
         // GET: LoaiDeTais/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LoaiDeTai loaiDeTai = db.LoaiDeTais.Find(id);
+            LoaiDeTai loaiDeTai = await db.LoaiDeTais.FindAsync(id);
             if (loaiDeTai == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.maChuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh");
             return View(loaiDeTai);
         }
 
@@ -86,26 +153,25 @@ namespace QuanLyDeTai.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "maLoaiDeTai,tenLoaiDeTai,nienKhoa,hocKy,maChuyenNganh")] LoaiDeTai loaiDeTai)
+        public async Task<ActionResult> Edit([Bind(Include = "maLoaiDeTai,tenLoaiDeTai,nienKhoa,hocKy,tgDangKy,tgKetThuc")] LoaiDeTai loaiDeTai)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(loaiDeTai).State = EntityState.Modified;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.maChuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh");
             return View(loaiDeTai);
         }
 
         // GET: LoaiDeTais/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LoaiDeTai loaiDeTai = db.LoaiDeTais.Find(id);
+            LoaiDeTai loaiDeTai = await db.LoaiDeTais.FindAsync(id);
             if (loaiDeTai == null)
             {
                 return HttpNotFound();
@@ -116,11 +182,11 @@ namespace QuanLyDeTai.Controllers
         // POST: LoaiDeTais/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            LoaiDeTai loaiDeTai = db.LoaiDeTais.Find(id);
+            LoaiDeTai loaiDeTai = await db.LoaiDeTais.FindAsync(id);
             db.LoaiDeTais.Remove(loaiDeTai);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 

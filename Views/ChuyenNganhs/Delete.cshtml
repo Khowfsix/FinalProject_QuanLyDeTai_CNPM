@@ -7,7 +7,7 @@
 
 <h2>Xóa</h2>
 
-<h3>Bạn có chắc chắn xóa chuyên ngành này?</h3>
+<h3>Bạn muốn xóa chuyên ngành này?</h3>
 <div>
     <h4>Chuyên ngành</h4>
     <hr />
@@ -30,7 +30,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

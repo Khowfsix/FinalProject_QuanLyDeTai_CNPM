@@ -81,6 +81,8 @@
           <ScalarProperty Name="diem" ColumnName="diem" />
           <ScalarProperty Name="truongNhom" ColumnName="truongNhom" />
           <ScalarProperty Name="gvHuongDan" ColumnName="gvHuongDan" />
+          <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+          <ScalarProperty Name="maChuyenNganh" ColumnName="maChuyenNganh" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -94,10 +96,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GiangVienChuyenNganhs">
+      <EntityTypeMapping TypeName="QuanLyDeTaiModel.GiangVienChuyenNganh">
+        <MappingFragment StoreEntitySet="GiangVienChuyenNganh">
+          <ScalarProperty Name="maChuyenNganh" ColumnName="maChuyenNganh" />
+          <ScalarProperty Name="maGiangVien" ColumnName="maGiangVien" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GiangVienPhanBiens">
       <EntityTypeMapping TypeName="QuanLyDeTaiModel.GiangVienPhanBien">
         <MappingFragment StoreEntitySet="GiangVienPhanBien">
-          <ScalarProperty Name="maPhanBien" ColumnName="maPhanBien" />
+          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="maGiangVien" ColumnName="maGiangVien" />
           <ScalarProperty Name="maDeTai" ColumnName="maDeTai" />
         </MappingFragment>
@@ -106,30 +116,30 @@
     <EntitySetMapping Name="HoiDongChams">
       <EntityTypeMapping TypeName="QuanLyDeTaiModel.HoiDongCham">
         <MappingFragment StoreEntitySet="HoiDongCham">
-          <ScalarProperty Name="maHoiDong" ColumnName="maHoiDong" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="maGiangVien" ColumnName="maGiangVien" />
           <ScalarProperty Name="maDeTai" ColumnName="maDeTai" />
-          <ScalarProperty Name="soLuongGV" ColumnName="soLuongGV" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="LoaiDeTais">
       <EntityTypeMapping TypeName="QuanLyDeTaiModel.LoaiDeTai">
         <MappingFragment StoreEntitySet="LoaiDeTai">
+          <ScalarProperty Name="tgKetThuc" ColumnName="tgKetThuc" />
+          <ScalarProperty Name="tgDangKy" ColumnName="tgDangKy" />
           <ScalarProperty Name="maLoaiDeTai" ColumnName="maLoaiDeTai" />
           <ScalarProperty Name="tenLoaiDeTai" ColumnName="tenLoaiDeTai" />
           <ScalarProperty Name="nienKhoa" ColumnName="nienKhoa" />
           <ScalarProperty Name="hocKy" ColumnName="hocKy" />
-          <ScalarProperty Name="maChuyenNganh" ColumnName="maChuyenNganh" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Nhoms">
       <EntityTypeMapping TypeName="QuanLyDeTaiModel.Nhom">
         <MappingFragment StoreEntitySet="Nhom">
-          <ScalarProperty Name="maNhom" ColumnName="maNhom" />
-          <ScalarProperty Name="maNhomTruong" ColumnName="maNhomTruong" />
-          <ScalarProperty Name="soLuongSv" ColumnName="soLuongSv" />
           <ScalarProperty Name="maDeTai" ColumnName="maDeTai" />
+          <ScalarProperty Name="MSSV" ColumnName="MSSV" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -154,20 +164,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ThongBaos">
+      <EntityTypeMapping TypeName="QuanLyDeTaiModel.ThongBao">
+        <MappingFragment StoreEntitySet="ThongBao">
+          <ScalarProperty Name="maThongBao" ColumnName="maThongBao" />
+          <ScalarProperty Name="tieuDe" ColumnName="tieuDe" />
+          <ScalarProperty Name="moTa" ColumnName="moTa" />
+          <ScalarProperty Name="noiDung" ColumnName="noiDung" />
+          <ScalarProperty Name="trangThai" ColumnName="trangThai" />
+          <ScalarProperty Name="ngayTao" ColumnName="ngayTao" />
+          <ScalarProperty Name="fileDinhKem" ColumnName="fileDinhKem" />
+          <ScalarProperty Name="maLoaiDeTai" ColumnName="maLoaiDeTai" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="AspNetUserRoles" TypeName="QuanLyDeTaiModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
       <EndProperty Name="AspNetRoles">
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
       <EndProperty Name="AspNetUsers">
         <ScalarProperty Name="Id" ColumnName="UserId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="LoaiDeTaiChuyenNganh" TypeName="QuanLyDeTaiModel.LoaiDeTaiChuyenNganh" StoreEntitySet="LoaiDeTaiChuyenNganh">
-      <EndProperty Name="ChuyenNganh">
-        <ScalarProperty Name="maChuyenNganh" ColumnName="maChuyenNganh" />
-      </EndProperty>
-      <EndProperty Name="LoaiDeTai">
-        <ScalarProperty Name="maLoaiDeTai" ColumnName="maLoaiDeTai" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>

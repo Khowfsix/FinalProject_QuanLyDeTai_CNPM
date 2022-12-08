@@ -5,14 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Chi tiết</h2>
+<h2>Details</h2>
 
 <div>
-    <h4>Loại đề tài</h4>
+    <h4>LoaiDeTai</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayName("Tên loại đề tài")
+            @Html.DisplayNameFor(model => model.tenLoaiDeTai)
         </dt>
 
         <dd>
@@ -20,7 +20,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Niên khóa")
+            @Html.DisplayNameFor(model => model.nienKhoa)
         </dt>
 
         <dd>
@@ -28,17 +28,32 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Học kỳ")
+            @Html.DisplayNameFor(model => model.hocKy)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.hocKy)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.tgDangKy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tgDangKy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tgKetThuc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tgKetThuc)
+        </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Sửa", "Edit", new { id = Model.maLoaiDeTai }) |
-    @Html.ActionLink("Quay lại danh sách", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.maLoaiDeTai }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>
