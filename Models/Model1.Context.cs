@@ -39,7 +39,6 @@ namespace QuanLyDeTai.Models
         public virtual DbSet<LoaiDeTai> LoaiDeTais { get; set; }
         public virtual DbSet<Nhom> Nhoms { get; set; }
         public virtual DbSet<SinhVien> SinhViens { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<ThongBao> ThongBaos { get; set; }
     }
 }

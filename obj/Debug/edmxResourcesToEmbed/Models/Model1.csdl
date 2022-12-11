@@ -146,10 +146,10 @@
     <Property Name="tenLoaiDeTai" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
     <Property Name="nienKhoa" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
     <Property Name="hocKy" Type="Int32" />
-    <NavigationProperty Name="DeTais" Relationship="Self.FK_DeTai_LoaiDeTai_loaiDeTai" FromRole="LoaiDeTai" ToRole="DeTai" />
-    <NavigationProperty Name="ThongBaos" Relationship="Self.FK_ThongBao_LoaiDeTai_maLoaiDeTai" FromRole="LoaiDeTai" ToRole="ThongBao" />
     <Property Name="tgDangKy" Type="DateTime" Precision="3" />
     <Property Name="tgKetThuc" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="DeTais" Relationship="Self.FK_DeTai_LoaiDeTai_loaiDeTai" FromRole="LoaiDeTai" ToRole="DeTai" />
+    <NavigationProperty Name="ThongBaos" Relationship="Self.FK_ThongBao_LoaiDeTai_maLoaiDeTai" FromRole="LoaiDeTai" ToRole="ThongBao" />
   </EntityType>
   <EntityType Name="Nhom">
     <Key>
@@ -171,16 +171,6 @@
     <Property Name="maChuyenNganh" Type="Int32" />
     <NavigationProperty Name="AspNetUser" Relationship="Self.fk_accountStudent" FromRole="SinhVien" ToRole="AspNetUsers" />
     <NavigationProperty Name="ChuyenNganh" Relationship="Self.fk_sinhVien_chuyenNganh" FromRole="SinhVien" ToRole="ChuyenNganh" />
-  </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="ThongBao">
     <Key>
@@ -375,7 +365,6 @@
     <EntitySet Name="LoaiDeTais" EntityType="Self.LoaiDeTai" />
     <EntitySet Name="Nhoms" EntityType="Self.Nhom" />
     <EntitySet Name="SinhViens" EntityType="Self.SinhVien" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="ThongBaos" EntityType="Self.ThongBao" />
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />

@@ -21,6 +21,7 @@ namespace QuanLyDeTai.Controllers
             var sinhViens = db.SinhViens.Include(s => s.AspNetUser).Include(s => s.ChuyenNganh);          
             return View(sinhViens.ToList());
         }
+
         public ActionResult SuaThongTin(int maDeTai, int id)
         {
             ViewBag.maDeTai = maDeTai;
@@ -82,7 +83,7 @@ namespace QuanLyDeTai.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SinhVien sinhVien = db.SinhViens.Find(id);
+            SinhVien sinhVien = db.SinhViens.Include(s => s.AspNetUser).Where(s => s.account_ID.Equals(id)).FirstOrDefault();
             if (sinhVien == null)
             {
                 return HttpNotFound();
@@ -115,6 +116,20 @@ namespace QuanLyDeTai.Controllers
             ViewBag.account_ID = new SelectList(db.AspNetUsers, "Id", "Email", sinhVien.account_ID);
             ViewBag.maChuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh", sinhVien.maChuyenNganh);
             return View(sinhVien);
+        }
+
+        public ActionResult themSinhVien()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult themSinhVien(
+            [Bind(Include = "Email, Password, ConfirmPassword")] RegisterViewModel registerViewModel,
+            [Bind(Include = "accountID, tenSinhVien, maChuyenNganh")] SinhVien sinhVien)
+        {
+            return View();
         }
 
         // GET: SinhViens/Edit/5
