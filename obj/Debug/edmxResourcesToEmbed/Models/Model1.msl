@@ -106,6 +106,7 @@
     <EntitySetMapping Name="HoiDongChams">
       <EntityTypeMapping TypeName="QuanLyDeTai2Model.HoiDongCham">
         <MappingFragment StoreEntitySet="HoiDongCham">
+          <ScalarProperty Name="maGiangVien" ColumnName="maGiangVien" />
           <ScalarProperty Name="maHoiDong" ColumnName="maHoiDong" />
           <ScalarProperty Name="maDeTai" ColumnName="maDeTai" />
           <ScalarProperty Name="soLuongGV" ColumnName="soLuongGV" />

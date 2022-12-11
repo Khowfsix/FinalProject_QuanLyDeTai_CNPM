@@ -1,0 +1,76 @@
+﻿@model IEnumerable<QuanLyDeTai.Models.LoaiDeTai>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<br />
+<br />
+
+<h2 style="color:blue; display:flex;">Tìm kiếm</h2>
+
+@using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-inline"}))
+{
+
+
+    <div class="form-group">
+        <select class="form-control text-center" name="param_option" id="tim_kiem_tong_hop">
+            <option value="timkiemgiangvien">Tìm kiếm giảng viên</option>
+            <option value="timkiemsinhvien">Tìm kiếm sinh viên</option>
+            <option value="timkiemdetai">Tìm kiếm đề tài</option>
+        </select>
+        <fieldset class="form-group">
+            @*<legend>Chọn loại đề tài</legend>
+            @* @foreach (var item in Model)
+        {
+            <input type="radio" name="group_loaidt" value="@item.maLoaiDeTai"> <span>@item.tenLoaiDeTai | @item.nienKhoa <br></span>
+        }*@
+        </fieldset>;
+        <input type="Text" class="form-control mx-sm-3" value="@ViewBag.Keyword" name="searchString" placeholder="Nhập từ khóa">
+        <input type="submit" class="btn btn-danger" value="Tìm kiếm">
+    </div>
+    <hr />
+}
+@if (ViewData["resultSearchSV"]!=null)
+{
+    <table class="table">
+        <tr>
+            <th>
+                Tên giảng viên
+            </th>
+            <th>
+                Loại giảng viên
+            </th>
+            <th>
+               Mã giảng viên
+            </th>
+            <th>
+               Email
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (QuanLyDeTai.Models.GiangVien item in (List<QuanLyDeTai.Models.GiangVien>)ViewData["resultSearchGV"])
+        {
+            <tr>
+                <td>
+                    @item.tenGiangVien
+                </td>
+                <td>
+                    @item.loaiGiangVien
+                </td>
+                <td>
+                    @item.maGiangVien
+                </td>
+                <td>
+                    @item.AspNetUser.Email
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.account_ID }) |
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+

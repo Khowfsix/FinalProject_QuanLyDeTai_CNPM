@@ -1,0 +1,46 @@
+﻿@model QuanLyDeTai.ViewModel.PhanPhanBienViewModel
+@{
+    ViewBag.Title = "PhanPhanBien";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PhanPhanBien</h2>
+@using (Html.BeginForm("PhanPhanBien", "GiangViens", FormMethod.Post, new { @class = "form-inline" }))
+{
+    @Html.AntiForgeryToken()
+<div class="form-horizontal">
+    <h4>GiangVien</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <div class="col-md-10">
+            <label class="control-label">Chọn đề tài</label>
+            <select class="form-control text-center" name="maDeTai" id="maDeTai">
+                @foreach (var item in Model.deTais)
+                {
+                    <option value="@item.maDeTai">@item.tenDeTai | @item.LoaiDeTai1.tenLoaiDeTai</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+       
+        <div class="col-md-10">
+            <label class="control-label">Chọn giảng viên</label>
+            <select class="form-control text-center" name="maGiangVien" id="maGiangVien">
+                @foreach (var item in Model.giangViens)
+                {
+                    <option value="@item.maGiangVien">@item.tenGiangVien | @item.loaiGiangVien</option>
+                }
+            </select>
+        </div>
+    </div>
+   
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Phân giảng viên phản biện" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+

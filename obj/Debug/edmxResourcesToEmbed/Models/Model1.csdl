@@ -123,6 +123,7 @@
     <Property Name="maDeTai" Type="Int32" />
     <Property Name="soLuongGV" Type="Int32" />
     <NavigationProperty Name="DeTai" Relationship="Self.FK_hoiDongCham_DeTai" FromRole="HoiDongCham" ToRole="DeTai" />
+    <Property Name="maGiangVien" Type="Int32" />
   </EntityType>
   <EntityType Name="LoaiDeTai">
     <Key>

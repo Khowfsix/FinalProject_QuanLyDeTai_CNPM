@@ -111,6 +111,7 @@
     <Property Name="maHoiDong" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="maDeTai" Type="int" />
     <Property Name="soLuongGV" Type="int" />
+    <Property Name="maGiangVien" Type="int" />
   </EntityType>
   <EntityType Name="LoaiDeTai">
     <Key>
@@ -274,6 +275,9 @@ warning 6035: The relationship 'fk_giangVienPhanBien' has columns that are not p
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <!--Errors Found During Generation:
+warning 6035: The relationship 'fk_HoiDongCham_GiangVien' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="fk_HoiDongCham_GiangVien" />-->
   <Association Name="fk_loaiDeTai_chuyenNganh">
     <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="0..1" />
     <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="*" />

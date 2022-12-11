@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QuanLyDeTai.Models;
+using QuanLyDeTai.ViewModel;
 
 namespace QuanLyDeTai.Controllers
 {
@@ -20,7 +21,51 @@ namespace QuanLyDeTai.Controllers
             var giangViens = db.GiangViens.Include(g => g.AspNetUser);
             return View(giangViens.ToList());
         }
+        public ActionResult PhanPhanBien()
+        {
+            var deTais = db.DeTais.Include(d => d.LoaiDeTai1);
+            var giangViens = db.GiangViens.Include(g => g.AspNetUser);
+            PhanPhanBienViewModel phanPhanBien = new PhanPhanBienViewModel();
+            phanPhanBien.deTais = deTais.ToList();
+            phanPhanBien.giangViens = giangViens.ToList();
+            return View(phanPhanBien);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PhanPhanBien(FormCollection form)
+        {
+            int maDeTai = Convert.ToInt32(form["maDeTai"]);
+            int maGiangVien = Convert.ToInt32(form["maGiangVien"]);
+            GiangVienPhanBien phanPhanBien = new GiangVienPhanBien();
+            phanPhanBien.maDeTai = maDeTai;
+            phanPhanBien.maGiangVien = maGiangVien;
+            db.GiangVienPhanBiens.Add(phanPhanBien);
+            db.SaveChanges();
+            return Redirect("PhanPhanBien");
+        }
 
+        public ActionResult PhanHoiDong()
+        {
+            var deTais = db.DeTais.Include(d => d.LoaiDeTai1);
+            var giangViens = db.GiangViens.Include(g => g.AspNetUser);
+            HoiDongChamViewModel hoiDongCham = new HoiDongChamViewModel();
+            hoiDongCham.deTais = deTais.ToList();
+            hoiDongCham.giangViens = giangViens.ToList();
+            return View(hoiDongCham);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PhanHoiDong(FormCollection form)
+        {
+            int maDeTai = Convert.ToInt32(form["maDeTai"]);
+            int maGiangVien = Convert.ToInt32(form["maGiangVien"]);
+            HoiDongCham hoiDongCham = new HoiDongCham();
+            hoiDongCham.maDeTai = maDeTai;
+            hoiDongCham.maGiangVien = maGiangVien;
+            db.HoiDongChams.Add(hoiDongCham);
+            db.SaveChanges();
+            return Redirect("PhanPhanBien");
+        }
         // GET: GiangViens/Details/5
         public ActionResult Details(string id)
         {

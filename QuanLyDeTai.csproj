@@ -180,6 +180,7 @@
     <Compile Include="Controllers\LoaiDeTaisController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NhomsController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SinhViensController.cs" />
     <Compile Include="Controllers\ThongBaosController.cs" />
     <Compile Include="Global.asax.cs">
@@ -253,6 +254,8 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\HoiDongChamViewModel.cs" />
+    <Compile Include="ViewModel\PhanPhanBienViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -375,6 +378,12 @@
     <Content Include="Views\ThongBaos\Details.cshtml" />
     <Content Include="Views\ThongBaos\Edit.cshtml" />
     <Content Include="Views\ThongBaos\Index.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Search\resultSearchGV.cshtml" />
+    <Content Include="Views\Search\resultSearchSV.cshtml" />
+    <Content Include="Views\Search\resultSearchDT.cshtml" />
+    <Content Include="Views\GiangViens\PhanPhanBien.cshtml" />
+    <Content Include="Views\GiangViens\PhanHoiDong.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

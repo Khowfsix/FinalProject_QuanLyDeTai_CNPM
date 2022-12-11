@@ -1,0 +1,83 @@
+﻿@model IEnumerable<QuanLyDeTai.Models.DeTai>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<br />
+<br />
+
+<h2 style="color:blue; display:flex;">Tìm kiếm</h2>
+@using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-inline" }))
+{
+
+
+    <div class="form-group">
+        <select class="form-control text-center" name="param_option" id="tim_kiem_tong_hop">
+            <option value="timkiemgiangvien">Tìm kiếm giảng viên</option>
+            <option value="timkiemsinhvien">Tìm kiếm sinh viên</option>
+            <option value="timkiemdetai" selected="selected">Tìm kiếm đề tài</option>
+        </select>
+        <input type="Text" class="form-control mx-sm-3" value="@ViewBag.Keyword" name="searchString" placeholder="Nhập từ khóa">
+        <input type="submit" class="btn btn-danger" value="Tìm kiếm">
+    </div>
+    <hr />
+}
+
+<h2>Kết quả tìm kiếm</h2>
+@if (@Model.Count() == 0)
+{
+    <div class="alert alert-danger" role="alert">
+        Không tìm thấy đề tài
+    </div>
+}
+else
+{
+
+    if (ViewBag.Keyword == "")
+    {
+        <p>Không nhập từ khóa - Danh sách tất cả đề tài </p>
+    }
+    <p class="center-block" style="width: fit-content;">Tổng số kết quả: @Model.Count()</p>
+    <table class="table">
+        <tr>
+            <th>
+                Tên đề tài
+            </th>
+            <th>
+                GVHD
+            </th>
+            <th>
+                Số lượng SV tối đa
+            </th>
+            <th>
+                Chuyên ngành
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tenDeTai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.gvHuongDan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.soLuongSinhVienToiDa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoaiDeTai1.ChuyenNganh.tenChuyenNganh)
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", "DeTais", new { id = item.maDeTai })">Chi tiết</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+
+}

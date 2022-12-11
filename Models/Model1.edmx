@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QuanLyDeTai2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QuanLyDeTai2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -116,6 +116,7 @@
           <Property Name="maHoiDong" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="maDeTai" Type="int" />
           <Property Name="soLuongGV" Type="int" />
+          <Property Name="maGiangVien" Type="int" />
         </EntityType>
         <EntityType Name="LoaiDeTai">
           <Key>
@@ -279,6 +280,9 @@ warning 6035: The relationship 'fk_giangVienPhanBien' has columns that are not p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'fk_HoiDongCham_GiangVien' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="fk_HoiDongCham_GiangVien" />-->
         <Association Name="fk_loaiDeTai_chuyenNganh">
           <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="0..1" />
           <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="*" />
@@ -460,8 +464,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
             <End Role="ChuyenNganh" EntitySet="ChuyenNganh" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLyDeTai2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -588,6 +591,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <Property Name="maDeTai" Type="Int32" />
           <Property Name="soLuongGV" Type="Int32" />
           <NavigationProperty Name="DeTai" Relationship="Self.FK_hoiDongCham_DeTai" FromRole="HoiDongCham" ToRole="DeTai" />
+          <Property Name="maGiangVien" Type="Int32" />
         </EntityType>
         <EntityType Name="LoaiDeTai">
           <Key>
@@ -977,6 +981,7 @@ warning 6035: The relationship 'FK_Nhom_SinhVien1' has columns that are not part
           <EntitySetMapping Name="HoiDongChams">
             <EntityTypeMapping TypeName="QuanLyDeTai2Model.HoiDongCham">
               <MappingFragment StoreEntitySet="HoiDongCham">
+                <ScalarProperty Name="maGiangVien" ColumnName="maGiangVien" />
                 <ScalarProperty Name="maHoiDong" ColumnName="maHoiDong" />
                 <ScalarProperty Name="maDeTai" ColumnName="maDeTai" />
                 <ScalarProperty Name="soLuongGV" ColumnName="soLuongGV" />

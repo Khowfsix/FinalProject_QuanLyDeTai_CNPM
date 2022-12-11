@@ -1,0 +1,89 @@
+﻿@model IEnumerable<QuanLyDeTai.Models.SinhVien>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<br />
+<br />
+
+<h2 style="color:blue; display:flex;">Tìm kiếm</h2>
+@using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-inline" }))
+{
+
+
+    <div class="form-group">
+        <select class="form-control text-center" name="param_option" id="tim_kiem_tong_hop">
+            <option value="timkiemgiangvien">Tìm kiếm giảng viên</option>
+            <option value="timkiemsinhvien" selected="selected">Tìm kiếm sinh viên</option>
+            <option value="timkiemdetai">Tìm kiếm đề tài</option>
+        </select>
+        <fieldset class="form-group">
+            @*<legend>Chọn loại đề tài</legend>
+                    @* @foreach (var item in Model)
+                {
+                    <input type="radio" name="group_loaidt" value="@item.maLoaiDeTai"> <span>@item.tenLoaiDeTai | @item.nienKhoa <br></span>
+                }*@
+        </fieldset>
+        <input type="Text" class="form-control mx-sm-3" value="@ViewBag.Keyword" name="searchString" placeholder="Nhập từ khóa">
+        <input type="submit" class="btn btn-danger" value="Tìm kiếm">
+    </div>
+    <hr />
+}
+
+<h2>Kết quả tìm kiếm</h2>
+@if (@Model.Count() == 0)
+{
+    <div class="alert alert-danger" role="alert">
+        Không tìm thấy sinh viên
+    </div>
+}
+else
+{
+
+    if (ViewBag.Keyword == "")
+    {
+        <p>Không nhập từ khóa - Danh sách tất cả sinh viên </p>
+    }
+    <p class="center-block" style="width: fit-content;">Tổng số kết quả: @Model.Count()</p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MSSV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tenSinhVien)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AspNetUser.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChuyenNganh.tenChuyenNganh)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MSSV)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tenSinhVien)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ChuyenNganh.tenChuyenNganh)
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", "SinhViens", new { id = item.account_ID })">Chi tiết</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
