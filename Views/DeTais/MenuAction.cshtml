@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Menu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- CSS only -->
+<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css'
+      rel='stylesheet'>
+<h2>Hành động</h2>
+@{
+    if (User.IsInRole("Sinh viên"))
+    {
+        <a href="@Url.Action("Index", "DeTais")" style="font-size: 25px"><i class='bx bxs-edit-alt'></i> Đăng ký đề tài</a>
+    }
+    if (User.IsInRole("Giảng viên"))
+    {
+        <a href="@Url.Action("GiangVienDangKy", "DeTais")" style="font-size: 25px"><i class='bx bxs-edit-alt'></i> Đăng ký đề tài mới</a>
+    }
+    if (User.IsInRole("Admin"))
+    {
+        <a href="@Url.Action("TaoDotDangKy", "LoaiDeTais")" style="font-size: 25px"><i class='bx bxs-edit-alt'></i> Tạo đợt đăng ký </a>
+        <br />
+        <a href="@Url.Action("DanhSachDotDangKy", "LoaiDeTais")" style="font-size: 25px"><i class='bx bxs-edit-alt'></i> Xóa đợt đăng ký </a>
+    }
+}
+

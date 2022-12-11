@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="QuanLyDeTai2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="QuanLyDeTaiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="C__MigrationHistory">
     <Key>
       <PropertyRef Name="MigrationId" />
@@ -68,10 +68,10 @@
     <Property Name="maChuyenNganh" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="tenChuyenNganh" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
     <Property Name="truongBoMon" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="LoaiDeTais" Relationship="Self.fk_loaiDeTai_chuyenNganh" FromRole="ChuyenNganh" ToRole="LoaiDeTai" />
+    <NavigationProperty Name="DeTais" Relationship="Self.FK_DeTai_ChuyenNganh_maChuyenNganh" FromRole="ChuyenNganh" ToRole="DeTai" />
+    <NavigationProperty Name="GiangVienChuyenNganhs" Relationship="Self.FK_GiangVienChuyenNganh_ChuyenNganh_maChuyenNganh" FromRole="ChuyenNganh" ToRole="GiangVienChuyenNganh" />
     <NavigationProperty Name="SinhViens" Relationship="Self.fk_sinhVien_chuyenNganh" FromRole="ChuyenNganh" ToRole="SinhVien" />
     <NavigationProperty Name="GiangVien" Relationship="Self.fk_truongBoMon" FromRole="ChuyenNganh" ToRole="GiangVien" />
-    <NavigationProperty Name="LoaiDeTais1" Relationship="Self.LoaiDeTaiChuyenNganh" FromRole="ChuyenNganh" ToRole="LoaiDeTai" />
   </EntityType>
   <EntityType Name="DeTai">
     <Key>
@@ -90,10 +90,13 @@
     <Property Name="diem" Type="Double" />
     <Property Name="truongNhom" Type="Int32" />
     <Property Name="gvHuongDan" Type="Int32" />
+    <Property Name="TrangThai" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="maChuyenNganh" Type="Int32" />
+    <NavigationProperty Name="ChuyenNganh" Relationship="Self.FK_DeTai_ChuyenNganh_maChuyenNganh" FromRole="DeTai" ToRole="ChuyenNganh" />
     <NavigationProperty Name="LoaiDeTai1" Relationship="Self.FK_DeTai_LoaiDeTai_loaiDeTai" FromRole="DeTai" ToRole="LoaiDeTai" />
-    <NavigationProperty Name="HoiDongChams" Relationship="Self.FK_hoiDongCham_DeTai" FromRole="DeTai" ToRole="HoiDongCham" />
-    <NavigationProperty Name="Nhoms" Relationship="Self.fk_nhomDeTai" FromRole="DeTai" ToRole="Nhom" />
-    <NavigationProperty Name="GiangVienPhanBiens" Relationship="Self.FK_PhanBien_DeTai" FromRole="DeTai" ToRole="GiangVienPhanBien" />
+    <NavigationProperty Name="GiangVienPhanBiens" Relationship="Self.FK_GiangVienPhanBien_DeTai_maDeTai" FromRole="DeTai" ToRole="GiangVienPhanBien" />
+    <NavigationProperty Name="HoiDongChams" Relationship="Self.FK_HoiDongCham_DeTai_maDeTai" FromRole="DeTai" ToRole="HoiDongCham" />
+    <NavigationProperty Name="Nhoms" Relationship="Self.FK_Nhom_DeTai_maDeTai" FromRole="DeTai" ToRole="Nhom" />
   </EntityType>
   <EntityType Name="GiangVien">
     <Key>
@@ -106,24 +109,34 @@
     <NavigationProperty Name="AspNetUser" Relationship="Self.fk_accountTeacher" FromRole="GiangVien" ToRole="AspNetUsers" />
     <NavigationProperty Name="ChuyenNganhs" Relationship="Self.fk_truongBoMon" FromRole="GiangVien" ToRole="ChuyenNganh" />
   </EntityType>
+  <EntityType Name="GiangVienChuyenNganh">
+    <Key>
+      <PropertyRef Name="maChuyenNganh" />
+      <PropertyRef Name="maGiangVien" />
+    </Key>
+    <Property Name="maChuyenNganh" Type="Int32" Nullable="false" />
+    <Property Name="maGiangVien" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ChuyenNganh" Relationship="Self.FK_GiangVienChuyenNganh_ChuyenNganh_maChuyenNganh" FromRole="GiangVienChuyenNganh" ToRole="ChuyenNganh" />
+  </EntityType>
   <EntityType Name="GiangVienPhanBien">
     <Key>
-      <PropertyRef Name="maPhanBien" />
+      <PropertyRef Name="maGiangVien" />
+      <PropertyRef Name="maDeTai" />
     </Key>
-    <Property Name="maPhanBien" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="maGiangVien" Type="Int32" />
-    <Property Name="maDeTai" Type="Int32" />
-    <NavigationProperty Name="DeTai" Relationship="Self.FK_PhanBien_DeTai" FromRole="GiangVienPhanBien" ToRole="DeTai" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="maGiangVien" Type="Int32" Nullable="false" />
+    <Property Name="maDeTai" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DeTai" Relationship="Self.FK_GiangVienPhanBien_DeTai_maDeTai" FromRole="GiangVienPhanBien" ToRole="DeTai" />
   </EntityType>
   <EntityType Name="HoiDongCham">
     <Key>
-      <PropertyRef Name="maHoiDong" />
+      <PropertyRef Name="maGiangVien" />
+      <PropertyRef Name="maDeTai" />
     </Key>
-    <Property Name="maHoiDong" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="maDeTai" Type="Int32" />
-    <Property Name="soLuongGV" Type="Int32" />
-    <NavigationProperty Name="DeTai" Relationship="Self.FK_hoiDongCham_DeTai" FromRole="HoiDongCham" ToRole="DeTai" />
-    <Property Name="maGiangVien" Type="Int32" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="maGiangVien" Type="Int32" Nullable="false" />
+    <Property Name="maDeTai" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DeTai" Relationship="Self.FK_HoiDongCham_DeTai_maDeTai" FromRole="HoiDongCham" ToRole="DeTai" />
   </EntityType>
   <EntityType Name="LoaiDeTai">
     <Key>
@@ -133,21 +146,20 @@
     <Property Name="tenLoaiDeTai" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
     <Property Name="nienKhoa" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
     <Property Name="hocKy" Type="Int32" />
-    <Property Name="maChuyenNganh" Type="Int32" />
-    <NavigationProperty Name="ChuyenNganh" Relationship="Self.fk_loaiDeTai_chuyenNganh" FromRole="LoaiDeTai" ToRole="ChuyenNganh" />
+    <Property Name="tgDangKy" Type="DateTime" Precision="3" />
+    <Property Name="tgKetThuc" Type="DateTime" Precision="3" />
     <NavigationProperty Name="DeTais" Relationship="Self.FK_DeTai_LoaiDeTai_loaiDeTai" FromRole="LoaiDeTai" ToRole="DeTai" />
-    <NavigationProperty Name="ThongBaos" Relationship="Self.fk_ThongBao_LoaiDeTai" FromRole="LoaiDeTai" ToRole="ThongBao" />
-    <NavigationProperty Name="ChuyenNganhs" Relationship="Self.LoaiDeTaiChuyenNganh" FromRole="LoaiDeTai" ToRole="ChuyenNganh" />
+    <NavigationProperty Name="ThongBaos" Relationship="Self.FK_ThongBao_LoaiDeTai_maLoaiDeTai" FromRole="LoaiDeTai" ToRole="ThongBao" />
   </EntityType>
   <EntityType Name="Nhom">
     <Key>
-      <PropertyRef Name="maNhom" />
+      <PropertyRef Name="maDeTai" />
+      <PropertyRef Name="MSSV" />
     </Key>
-    <Property Name="maNhom" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="maNhomTruong" Type="Int32" />
-    <Property Name="soLuongSv" Type="Int32" />
-    <Property Name="maDeTai" Type="Int32" />
-    <NavigationProperty Name="DeTai" Relationship="Self.fk_nhomDeTai" FromRole="Nhom" ToRole="DeTai" />
+    <Property Name="maDeTai" Type="Int32" Nullable="false" />
+    <Property Name="MSSV" Type="Int32" Nullable="false" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="DeTai" Relationship="Self.FK_Nhom_DeTai_maDeTai" FromRole="Nhom" ToRole="DeTai" />
   </EntityType>
   <EntityType Name="SinhVien">
     <Key>
@@ -172,7 +184,7 @@
     <Property Name="ngayTao" Type="DateTime" Precision="3" />
     <Property Name="fileDinhKem" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="maLoaiDeTai" Type="Int32" />
-    <NavigationProperty Name="LoaiDeTai" Relationship="Self.fk_ThongBao_LoaiDeTai" FromRole="ThongBao" ToRole="LoaiDeTai" />
+    <NavigationProperty Name="LoaiDeTai" Relationship="Self.FK_ThongBao_LoaiDeTai_maLoaiDeTai" FromRole="ThongBao" ToRole="LoaiDeTai" />
   </EntityType>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -226,14 +238,26 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fk_loaiDeTai_chuyenNganh">
+  <Association Name="FK_DeTai_ChuyenNganh_maChuyenNganh">
     <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="0..1" />
-    <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="*" />
+    <End Role="DeTai" Type="Self.DeTai" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ChuyenNganh">
         <PropertyRef Name="maChuyenNganh" />
       </Principal>
-      <Dependent Role="LoaiDeTai">
+      <Dependent Role="DeTai">
+        <PropertyRef Name="maChuyenNganh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GiangVienChuyenNganh_ChuyenNganh_maChuyenNganh">
+    <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="1" />
+    <End Role="GiangVienChuyenNganh" Type="Self.GiangVienChuyenNganh" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ChuyenNganh">
+        <PropertyRef Name="maChuyenNganh" />
+      </Principal>
+      <Dependent Role="GiangVienChuyenNganh">
         <PropertyRef Name="maChuyenNganh" />
       </Dependent>
     </ReferentialConstraint>
@@ -274,32 +298,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_hoiDongCham_DeTai">
-    <End Role="DeTai" Type="Self.DeTai" Multiplicity="0..1" />
-    <End Role="HoiDongCham" Type="Self.HoiDongCham" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DeTai">
-        <PropertyRef Name="maDeTai" />
-      </Principal>
-      <Dependent Role="HoiDongCham">
-        <PropertyRef Name="maDeTai" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_nhomDeTai">
-    <End Role="DeTai" Type="Self.DeTai" Multiplicity="0..1" />
-    <End Role="Nhom" Type="Self.Nhom" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DeTai">
-        <PropertyRef Name="maDeTai" />
-      </Principal>
-      <Dependent Role="Nhom">
-        <PropertyRef Name="maDeTai" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PhanBien_DeTai">
-    <End Role="DeTai" Type="Self.DeTai" Multiplicity="0..1" />
+  <Association Name="FK_GiangVienPhanBien_DeTai_maDeTai">
+    <End Role="DeTai" Type="Self.DeTai" Multiplicity="1" />
     <End Role="GiangVienPhanBien" Type="Self.GiangVienPhanBien" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="DeTai">
@@ -310,7 +310,31 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fk_ThongBao_LoaiDeTai">
+  <Association Name="FK_HoiDongCham_DeTai_maDeTai">
+    <End Role="DeTai" Type="Self.DeTai" Multiplicity="1" />
+    <End Role="HoiDongCham" Type="Self.HoiDongCham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeTai">
+        <PropertyRef Name="maDeTai" />
+      </Principal>
+      <Dependent Role="HoiDongCham">
+        <PropertyRef Name="maDeTai" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Nhom_DeTai_maDeTai">
+    <End Role="DeTai" Type="Self.DeTai" Multiplicity="1" />
+    <End Role="Nhom" Type="Self.Nhom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeTai">
+        <PropertyRef Name="maDeTai" />
+      </Principal>
+      <Dependent Role="Nhom">
+        <PropertyRef Name="maDeTai" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ThongBao_LoaiDeTai_maLoaiDeTai">
     <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="0..1" />
     <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="*" />
     <ReferentialConstraint>
@@ -326,11 +350,7 @@
     <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
     <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
   </Association>
-  <Association Name="LoaiDeTaiChuyenNganh">
-    <End Role="ChuyenNganh" Type="Self.ChuyenNganh" Multiplicity="*" />
-    <End Role="LoaiDeTai" Type="Self.LoaiDeTai" Multiplicity="*" />
-  </Association>
-  <EntityContainer Name="QuanLyDeTai2Entities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="QuanLyDeTaiEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
@@ -339,6 +359,7 @@
     <EntitySet Name="ChuyenNganhs" EntityType="Self.ChuyenNganh" />
     <EntitySet Name="DeTais" EntityType="Self.DeTai" />
     <EntitySet Name="GiangViens" EntityType="Self.GiangVien" />
+    <EntitySet Name="GiangVienChuyenNganhs" EntityType="Self.GiangVienChuyenNganh" />
     <EntitySet Name="GiangVienPhanBiens" EntityType="Self.GiangVienPhanBien" />
     <EntitySet Name="HoiDongChams" EntityType="Self.HoiDongCham" />
     <EntitySet Name="LoaiDeTais" EntityType="Self.LoaiDeTai" />
@@ -361,9 +382,13 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="GiangVien" EntitySet="GiangViens" />
     </AssociationSet>
-    <AssociationSet Name="fk_loaiDeTai_chuyenNganh" Association="Self.fk_loaiDeTai_chuyenNganh">
+    <AssociationSet Name="FK_DeTai_ChuyenNganh_maChuyenNganh" Association="Self.FK_DeTai_ChuyenNganh_maChuyenNganh">
       <End Role="ChuyenNganh" EntitySet="ChuyenNganhs" />
-      <End Role="LoaiDeTai" EntitySet="LoaiDeTais" />
+      <End Role="DeTai" EntitySet="DeTais" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GiangVienChuyenNganh_ChuyenNganh_maChuyenNganh" Association="Self.FK_GiangVienChuyenNganh_ChuyenNganh_maChuyenNganh">
+      <End Role="ChuyenNganh" EntitySet="ChuyenNganhs" />
+      <End Role="GiangVienChuyenNganh" EntitySet="GiangVienChuyenNganhs" />
     </AssociationSet>
     <AssociationSet Name="fk_sinhVien_chuyenNganh" Association="Self.fk_sinhVien_chuyenNganh">
       <End Role="ChuyenNganh" EntitySet="ChuyenNganhs" />
@@ -377,29 +402,25 @@
       <End Role="LoaiDeTai" EntitySet="LoaiDeTais" />
       <End Role="DeTai" EntitySet="DeTais" />
     </AssociationSet>
-    <AssociationSet Name="FK_hoiDongCham_DeTai" Association="Self.FK_hoiDongCham_DeTai">
-      <End Role="DeTai" EntitySet="DeTais" />
-      <End Role="HoiDongCham" EntitySet="HoiDongChams" />
-    </AssociationSet>
-    <AssociationSet Name="fk_nhomDeTai" Association="Self.fk_nhomDeTai">
-      <End Role="DeTai" EntitySet="DeTais" />
-      <End Role="Nhom" EntitySet="Nhoms" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PhanBien_DeTai" Association="Self.FK_PhanBien_DeTai">
+    <AssociationSet Name="FK_GiangVienPhanBien_DeTai_maDeTai" Association="Self.FK_GiangVienPhanBien_DeTai_maDeTai">
       <End Role="DeTai" EntitySet="DeTais" />
       <End Role="GiangVienPhanBien" EntitySet="GiangVienPhanBiens" />
     </AssociationSet>
-    <AssociationSet Name="fk_ThongBao_LoaiDeTai" Association="Self.fk_ThongBao_LoaiDeTai">
+    <AssociationSet Name="FK_HoiDongCham_DeTai_maDeTai" Association="Self.FK_HoiDongCham_DeTai_maDeTai">
+      <End Role="DeTai" EntitySet="DeTais" />
+      <End Role="HoiDongCham" EntitySet="HoiDongChams" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Nhom_DeTai_maDeTai" Association="Self.FK_Nhom_DeTai_maDeTai">
+      <End Role="DeTai" EntitySet="DeTais" />
+      <End Role="Nhom" EntitySet="Nhoms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ThongBao_LoaiDeTai_maLoaiDeTai" Association="Self.FK_ThongBao_LoaiDeTai_maLoaiDeTai">
       <End Role="LoaiDeTai" EntitySet="LoaiDeTais" />
       <End Role="ThongBao" EntitySet="ThongBaos" />
     </AssociationSet>
     <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
       <End Role="AspNetRoles" EntitySet="AspNetRoles" />
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-    </AssociationSet>
-    <AssociationSet Name="LoaiDeTaiChuyenNganh" Association="Self.LoaiDeTaiChuyenNganh">
-      <End Role="ChuyenNganh" EntitySet="ChuyenNganhs" />
-      <End Role="LoaiDeTai" EntitySet="LoaiDeTais" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

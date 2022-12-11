@@ -50,9 +50,6 @@ else
             <th>
                 Số lượng SV tối đa
             </th>
-            <th>
-                Chuyên ngành
-            </th>
             <th></th>
         </tr>
 
@@ -67,9 +64,6 @@ else
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.soLuongSinhVienToiDa)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LoaiDeTai1.ChuyenNganh.tenChuyenNganh)
                 </td>
                 <td>
                     <a href="@Url.Action("Details", "DeTais", new { id = item.maDeTai })">Chi tiết</a>

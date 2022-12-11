@@ -1,0 +1,99 @@
+﻿@model QuanLyDeTai.ViewModel.NhomsViewsModel
+
+@{
+    ViewBag.Title = "Danh sách thành viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Microsoft.AspNet.Identity;
+<h2>Index</h2>
+
+@if (User.IsInRole("Giảng viên"))
+{
+    if (User.Identity.GetUserId() == ViewBag.gvhdAccountId)
+    {
+        <p>
+            @Html.ActionLink("Thêm thành viên", "ThemThanhVien", new { maDeTai = ViewBag.maDeTai })
+        </p>
+    }
+}
+
+@if (User.IsInRole("Sinh viên"))
+{
+    if (ViewBag.userMSSV == Model.truongNhom)
+    {
+        <p>
+            @Html.ActionLink("Thêm thành viên", "ThemThanhVien", new { maDeTai = ViewBag.maDeTai })
+        </p>
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Mã số sinh viên")
+        </th>
+        <th>
+            @Html.DisplayName("Họ và tên")
+        </th>
+
+        <th>
+            @Html.DisplayName("Hành động")
+        </th>
+    </tr>
+
+    @foreach (var item in Model.danhsach)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MSSV)
+            </td>
+            <td>
+                @(item.MSSV == Model.truongNhom ? item.tenSinhVien + " (Trưởng nhóm)" : item.tenSinhVien)
+            </td>
+            @if (User.IsInRole("Sinh viên"))
+            {
+                if (ViewBag.userMSSV == Model.truongNhom && ViewBag.userMSSV != item.MSSV)
+                {
+                    <td>
+                        @Html.ActionLink("Xóa khỏi nhóm", "XoaThanhVien", new { maDeTai = ViewBag.maDeTai, id = item.MSSV }) |
+                        @Html.ActionLink("Xem thông tin", "XemThongTin", "SinhViens", new { maDeTai = ViewBag.maDeTai, id = item.MSSV }, null)
+                    </td>
+                }
+                else
+                {
+
+                    <td>
+                        @Html.ActionLink("Xem thông tin", "XemThongTin", "SinhViens", new { maDeTai = ViewBag.maDeTai, id = item.MSSV }, null)
+                    </td>
+                }
+            }
+            else if (User.IsInRole("Giảng viên"))
+            {
+                if (User.Identity.GetUserId() == ViewBag.gvhdAccountId)
+                {
+                    <td>
+                        @Html.ActionLink("Xóa khỏi nhóm", "XoaThanhVien", new { maDeTai = ViewBag.maDeTai, id = item.MSSV }) |
+                        @Html.ActionLink("Xem thông tin", "XemThongTin", "SinhViens", new { maDeTai = ViewBag.maDeTai, id = item.MSSV }, null)
+                    </td>
+                }
+                else
+                {
+
+                    <td>
+                        @Html.ActionLink("Xem thông tin", "XemThongTin", "SinhViens", new { maDeTai = ViewBag.maDeTai, id = item.MSSV }, null)
+                    </td>
+                }
+            }
+            else
+            {
+
+                <td>
+                    @Html.ActionLink("Xem thông tin", "XemThongTin", "SinhViens", new { maDeTai = ViewBag.maDeTai, id = item.MSSV }, null)
+                </td>
+            }
+
+        </tr>
+    }
+
+</table>
+<p>@Html.ActionLink("Quay lại đề tài", "Details", "DeTais", new { id = ViewBag.maDeTai }, null)</p>

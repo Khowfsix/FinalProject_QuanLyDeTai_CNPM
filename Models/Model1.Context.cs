@@ -13,10 +13,10 @@ namespace QuanLyDeTai.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class QuanLyDeTai2Entities : DbContext
+    public partial class QuanLyDeTaiEntities1 : DbContext
     {
-        public QuanLyDeTai2Entities()
-            : base("name=QuanLyDeTai2Entities")
+        public QuanLyDeTaiEntities1()
+            : base("name=QuanLyDeTaiEntities1")
         {
         }
     
@@ -33,6 +33,7 @@ namespace QuanLyDeTai.Models
         public virtual DbSet<ChuyenNganh> ChuyenNganhs { get; set; }
         public virtual DbSet<DeTai> DeTais { get; set; }
         public virtual DbSet<GiangVien> GiangViens { get; set; }
+        public virtual DbSet<GiangVienChuyenNganh> GiangVienChuyenNganhs { get; set; }
         public virtual DbSet<GiangVienPhanBien> GiangVienPhanBiens { get; set; }
         public virtual DbSet<HoiDongCham> HoiDongChams { get; set; }
         public virtual DbSet<LoaiDeTai> LoaiDeTais { get; set; }

@@ -6,13 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using QuanLyDeTai.Models;
 
 namespace QuanLyDeTai.Controllers
 {
     public class SinhViensController : Controller
     {
-        private QuanLyDeTai2Entities db = new QuanLyDeTai2Entities();
+        private QuanLyDeTaiEntities1 db = new QuanLyDeTaiEntities1();
 
         // GET: SinhViens
         public ActionResult Index()
@@ -20,7 +21,60 @@ namespace QuanLyDeTai.Controllers
             var sinhViens = db.SinhViens.Include(s => s.AspNetUser).Include(s => s.ChuyenNganh);
             return View(sinhViens.ToList());
         }
+        public ActionResult SuaThongTin(int maDeTai, int id)
+        {
+            ViewBag.maDeTai = maDeTai;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SinhVien sinhVien = db.SinhViens.Where(p => p.MSSV == id).First();
+            if (sinhVien == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.account_ID = new SelectList(db.AspNetUsers, "Id", "Email", sinhVien.account_ID);
+            ViewBag.maChuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh", sinhVien.maChuyenNganh);
+            return View(sinhVien);
+        }
 
+        // POST: SinhViens/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SuaThongTin(int maDeTai, [Bind(Include = "account_ID,MSSV,tenSinhVien,maChuyenNganh")] SinhVien sinhVien)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(sinhVien).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("XemThongTin", new { maDeTai = maDeTai, id = sinhVien.MSSV });
+            }
+            ViewBag.account_ID = new SelectList(db.AspNetUsers, "Id", "Email", sinhVien.account_ID);
+            ViewBag.maChuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh", sinhVien.maChuyenNganh);
+            return View(sinhVien);
+        }
+
+        // GET: SinhViens/XemThongTin/5
+        public ActionResult XemThongTin(int maDeTai, int id)
+        {
+            ViewBag.maDeTai = maDeTai;
+            var accountid = User.Identity.GetUserId();
+            if (User.IsInRole("Sinh viên"))
+                ViewBag.MSSV = db.SinhViens.Where(p => p.account_ID == accountid).FirstOrDefault().MSSV;
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SinhVien sinhVien = db.SinhViens.Where(p => p.MSSV == id).FirstOrDefault();
+            if (sinhVien == null)
+            {
+                return HttpNotFound();
+            }
+            return View(sinhVien);
+        }
         // GET: SinhViens/Details/5
         public ActionResult Details(string id)
         {
@@ -39,7 +93,7 @@ namespace QuanLyDeTai.Controllers
         // GET: SinhViens/Create
         public ActionResult Create()
         {
-            ViewBag.account_ID = new SelectList(db.AspNetUsers, "Id", "Email");
+            ViewBag.account_ID = new SelectList(db.AspNetUsers.Where(p => p.GiangVien == null), "Id", "Email");
             ViewBag.maChuyenNganh = new SelectList(db.ChuyenNganhs, "maChuyenNganh", "tenChuyenNganh");
             return View();
         }

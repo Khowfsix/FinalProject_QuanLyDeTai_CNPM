@@ -4,35 +4,36 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c3ff28148d6d403f8e9ae900e98bd070" Name="Diagram1" ZoomLevel="64">
-        <EntityTypeShape EntityType="QuanLyDeTai2Model.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDeTai2Model.AspNetRole" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDeTai2Model.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDeTai2Model.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDeTai2Model.AspNetUser" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDeTai2Model.ChuyenNganh" Width="1.5" PointX="7.5" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDeTai2Model.DeTai" Width="1.5" PointX="12" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDeTai2Model.GiangVien" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDeTai2Model.GiangVienPhanBien" Width="1.5" PointX="14.25" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDeTai2Model.HoiDongCham" Width="1.5" PointX="14.25" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDeTai2Model.LoaiDeTai" Width="1.5" PointX="9.75" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDeTai2Model.Nhom" Width="1.5" PointX="14.25" PointY="13.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDeTai2Model.SinhVien" Width="1.5" PointX="9.75" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyDeTai2Model.ThongBao" Width="1.5" PointX="12" PointY="16.25" IsExpanded="true" />
-        <AssociationConnector Association="QuanLyDeTai2Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDeTai2Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDeTai2Model.fk_accountStudent" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDeTai2Model.fk_accountTeacher" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDeTai2Model.fk_loaiDeTai_chuyenNganh" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDeTai2Model.fk_sinhVien_chuyenNganh" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDeTai2Model.fk_truongBoMon" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDeTai2Model.FK_DeTai_LoaiDeTai_loaiDeTai" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDeTai2Model.FK_hoiDongCham_DeTai" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDeTai2Model.fk_nhomDeTai" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDeTai2Model.FK_PhanBien_DeTai" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDeTai2Model.fk_ThongBao_LoaiDeTai" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDeTai2Model.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyDeTai2Model.LoaiDeTaiChuyenNganh" ManuallyRouted="false" />
+      <Diagram DiagramId="34f4f9375c934089a67ddcf9da7601f2" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="QuanLyDeTaiModel.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDeTaiModel.AspNetRole" Width="1.5" PointX="1.5" PointY="26.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDeTaiModel.AspNetUserClaim" Width="1.5" PointX="3.75" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDeTaiModel.AspNetUserLogin" Width="1.5" PointX="3.75" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDeTaiModel.AspNetUser" Width="1.5" PointX="1.5" PointY="20.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDeTaiModel.ChuyenNganh" Width="1.5" PointX="0.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDeTaiModel.DeTai" Width="1.5" PointX="4.125" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDeTaiModel.GiangVien" Width="1.5" PointX="1.5" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDeTaiModel.GiangVienChuyenNganh" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDeTaiModel.GiangVienPhanBien" Width="1.5" PointX="11.875" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDeTaiModel.HoiDongCham" Width="1.5" PointX="8" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDeTaiModel.LoaiDeTai" Width="1.5" PointX="2.125" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDeTaiModel.Nhom" Width="1.5" PointX="8.5" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDeTaiModel.SinhVien" Width="1.5" PointX="5.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDeTaiModel.ThongBao" Width="1.5" PointX="3" PointY="13.125" IsExpanded="true" />
+        <AssociationConnector Association="QuanLyDeTaiModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDeTaiModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDeTaiModel.fk_accountStudent" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDeTaiModel.fk_accountTeacher" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDeTaiModel.FK_DeTai_ChuyenNganh_maChuyenNganh" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDeTaiModel.FK_GiangVienChuyenNganh_ChuyenNganh_maChuyenNganh" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDeTaiModel.fk_sinhVien_chuyenNganh" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDeTaiModel.fk_truongBoMon" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDeTaiModel.FK_DeTai_LoaiDeTai_loaiDeTai" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDeTaiModel.FK_GiangVienPhanBien_DeTai_maDeTai" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDeTaiModel.FK_HoiDongCham_DeTai_maDeTai" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDeTaiModel.FK_Nhom_DeTai_maDeTai" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDeTaiModel.FK_ThongBao_LoaiDeTai_maLoaiDeTai" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDeTaiModel.AspNetUserRoles" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

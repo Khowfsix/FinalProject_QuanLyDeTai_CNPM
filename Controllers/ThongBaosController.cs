@@ -16,7 +16,7 @@ namespace QuanLyDeTai.Controllers
 {
     public class ThongBaosController : Controller
     {
-        private QuanLyDeTai2Entities db = new QuanLyDeTai2Entities();
+        private QuanLyDeTaiEntities1 db = new QuanLyDeTaiEntities1();
 
         // GET: ThongBaos
         public ActionResult Index()
@@ -43,7 +43,7 @@ namespace QuanLyDeTai.Controllers
         // GET: ThongBaos/Create
         public ActionResult Create()
         {
-            var loaiDeTais = db.LoaiDeTais.Include(l => l.ChuyenNganh);
+            var loaiDeTais = db.LoaiDeTais;
             ViewData["loaiDeTai"] = loaiDeTais.ToList();
             return View();
         }

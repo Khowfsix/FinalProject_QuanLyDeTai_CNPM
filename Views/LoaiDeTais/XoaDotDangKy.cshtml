@@ -1,0 +1,66 @@
+﻿@model QuanLyDeTai.Models.LoaiDeTai
+
+@{
+    ViewBag.Title = "Xóa đợt đăng ký";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Xóa đợt đăng ký</h2>
+
+<h3>Bạn muốn xóa đợt đăng ký này?</h3>
+<div>
+    <h4>LoaiDeTai</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tenLoaiDeTai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenLoaiDeTai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nienKhoa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nienKhoa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hocKy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hocKy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tgDangKy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tgDangKy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tgKetThuc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tgKetThuc)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default" /> |
+            @Html.ActionLink("Quay lại danh sách", "DanhSachDotDangKy")
+        </div>
+    }
+</div>

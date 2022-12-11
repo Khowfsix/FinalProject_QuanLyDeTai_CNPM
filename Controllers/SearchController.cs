@@ -13,7 +13,7 @@ namespace QuanLyDeTai.Controllers
 {
     public class SearchController : Controller
     {
-        private QuanLyDeTai2Entities db = new QuanLyDeTai2Entities();
+        private QuanLyDeTaiEntities1 db = new QuanLyDeTaiEntities1();
 
         //POST: Search
         [HttpPost]
@@ -121,16 +121,12 @@ namespace QuanLyDeTai.Controllers
                         {
                             resultSearchDT.Add(deTai);
                         }
-                        else if (deTai.LoaiDeTai1.ChuyenNganh.tenChuyenNganh.ToString().Contains(searchString))
-                        {
-                            resultSearchDT.Add(deTai);
-                        }
                         else if (deTai.LoaiDeTai1.tenLoaiDeTai.ToString().Contains(searchString))
                         {
                             resultSearchDT.Add(deTai);
                         }
                     }
-                    return View("resultSearchDT", deTais);
+                    return View("resultSearchDT", resultSearchDT);
                 }
                 else
                 {
@@ -142,7 +138,7 @@ namespace QuanLyDeTai.Controllers
         // GET: Search
         public ActionResult Index()
         {
-            var loaiDeTais = db.LoaiDeTais.Include(l => l.ChuyenNganh);
+            var loaiDeTais = db.LoaiDeTais;
             return View(loaiDeTais.ToList());
            
         }
