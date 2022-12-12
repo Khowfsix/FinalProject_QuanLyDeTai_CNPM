@@ -16,6 +16,7 @@ namespace QuanLyDeTai.Controllers
         private QuanLyDeTaiEntities db = new QuanLyDeTaiEntities();
 
         // GET: GiangViens
+        //[Authorize]
         public ActionResult Index()
         {
             var giangViens = db.GiangViens.Include(g => g.AspNetUser);

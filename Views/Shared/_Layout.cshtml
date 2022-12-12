@@ -2,81 +2,156 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Quản lý đề tài</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/style.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
-    <link href="~/Content/sidebar.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
-
-
-    <!--<div class="nav-right visible-xs">
-        <div class="button" id="btn">
-            <div class="bar top"></div>
-            <div class="bar middle"></div>
-            <div class="bar bottom"></div>
-        </div>
-    </div>-->
-
-
-    <!-- nav-right -->
-    <!--<main>
-        <nav>
-            <div class="nav-right hidden-xs">
-                <div class="button" id="btn">
-                    <div class="bar top"></div>
-                    <div class="bar middle"></div>
-                    <div class="bar bottom"></div>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 </div>
-            </div>-->
-            <!-- nav-right -->
-        <!--</nav>
-    </main>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>*@
+    <header>
+        <img src="~/images/sidebar/banner.jpg" width="100%" />
+    </header>
 
-    <div class="sidebar">
-        <ul class="sidebar-list">
-            <li class="sidebar-item"><a href="#" class="sidebar-anchor">Item 1</a></li>
-            <li class="sidebar-item"><a href="#" class="sidebar-anchor">Item 2</a></li>
-            <li class="sidebar-item"><a href="#" class="sidebar-anchor">Item 3</a></li>
-            <li class="sidebar-item"><a href="#" class="sidebar-anchor">Item 4</a></li>
-        </ul>
-    </div>-->
+    <div class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar">
+            <div class="p-4 pt-5">
+                <h1>Danh mục</h1>
+                <ul class="list-unstyled components mb-5">
+                    @*<li>
+                            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+                            <ul class="collapse list-unstyled" id="pageSubmenu">
+                                <li>
+                                    <a href="#">Page 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Page 2</a>
+                                </li>
+                                <li>
+                                    <a href="#">Page 3</a>
+                                </li>
+                            </ul>
+                        </li>*@
+                    <li>
+                        <a href="@Url.Action("Index","Home")"><img src="~/images/sidebar/house-icon.png" height="24" width="24" /> Trang chủ</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "LoaiDeTais")">
+                            <img src="~/images/sidebar/Actions-view-calendar-list-icon.png" height="24" width="24" /> Danh sách đề tài
+                        </a>
+                    </li>
+                    <li>
 
+                        <a href="@Url.Action("Index","GiangViens")">
+                            <img src="~/images/sidebar/Teacher-icon.png" height="24" width="24" /> Thông tin giảng viên
+                        </a>
+                    </li>
+                    <li>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+                        <a href="@Url.Action("Index","SinhViens")">
+                            <img src="~/images/sidebar/Student-3-icon.png" height="24" width="24" /> Thông tin sinh viên
+                        </a>
+                    </li>
+                    <li>
+
+                        <a href="#">
+                            <img src="~/images/sidebar/Actions-help-contents-icon.png" height="24" width="24" /> Hướng dẫn đăng ký
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="~/images/sidebar/chart-icon.png" height="24" width="24" /> Thống kê
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="~/images/sidebar/Search-icon.png" height="24" width="24" /> Tìm kiếm
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="footer">
+                    <p>
+                        <b>Môn học: Công nghệ phần mềm</b>
+                    </p>
+                </div>
+
+            </div>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content" class="p-4 p-md-5">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                        <i class="fa fa-bars"></i>
+                        <span class="sr-only">Toggle Menu</span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="@Url.Action("Index","Home")">Trang chính</a>
+                            </li>
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Quản lý thông tin</a>
+                            </li>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="#">Trang quản trị</a>
+                                </li>
+                            }
+
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </nav>
+
+            @RenderBody()
+        </div>
     </div>
+
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/popper.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/main.js"></script>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-
-    <script src="~/Scripts/sidebar.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

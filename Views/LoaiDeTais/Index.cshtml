@@ -5,55 +5,70 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Danh sách các loại đề tài</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.tenLoaiDeTai)
+            Tên loại đề tài
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.nienKhoa)
+            Niên khóa
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.hocKy)
+            Học kỳ
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.tgDangKy)
+            Thời gian đăng ký
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.tgKetThuc)
+            Thời gian kết thúc
         </th>
+        <th></th>
+        <th></th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.tenLoaiDeTai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nienKhoa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.hocKy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tgDangKy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tgKetThuc)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.maLoaiDeTai }) |
-                @Html.ActionLink("Details", "Details", new { id = item.maLoaiDeTai }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.maLoaiDeTai })
-            </td>
-        </tr>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tenLoaiDeTai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nienKhoa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.hocKy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tgDangKy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tgKetThuc)
+                </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.maLoaiDeTai })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.maLoaiDeTai })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.maLoaiDeTai })
+                    </td>
+                }
+            </tr>
+        </tbody>
     }
 
 </table>
