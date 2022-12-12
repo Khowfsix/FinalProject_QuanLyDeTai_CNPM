@@ -13,10 +13,10 @@ namespace QuanLyDeTai.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class QuanLyDeTaiEntities1 : DbContext
+    public partial class QuanLyDeTaiEntities : DbContext
     {
-        public QuanLyDeTaiEntities1()
-            : base("name=QuanLyDeTaiEntities1")
+        public QuanLyDeTaiEntities()
+            : base("name=QuanLyDeTaiEntities")
         {
         }
     

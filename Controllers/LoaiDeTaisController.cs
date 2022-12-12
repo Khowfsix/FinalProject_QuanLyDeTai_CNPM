@@ -14,7 +14,7 @@ namespace QuanLyDeTai.Controllers
 {
     public class LoaiDeTaisController : Controller
     {
-        private QuanLyDeTaiEntities1 db = new QuanLyDeTaiEntities1();
+        private QuanLyDeTaiEntities db = new QuanLyDeTaiEntities();
 
         // GET: LoaiDeTais
         public ActionResult Index()

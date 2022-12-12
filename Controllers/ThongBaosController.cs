@@ -16,7 +16,7 @@ namespace QuanLyDeTai.Controllers
 {
     public class ThongBaosController : Controller
     {
-        private QuanLyDeTaiEntities1 db = new QuanLyDeTaiEntities1();
+        private QuanLyDeTaiEntities db = new QuanLyDeTaiEntities();
 
         // GET: ThongBaos
         public ActionResult Index()

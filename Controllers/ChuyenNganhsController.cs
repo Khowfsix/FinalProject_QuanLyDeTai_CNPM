@@ -13,7 +13,7 @@ namespace QuanLyDeTai.Controllers
 {
     public class ChuyenNganhsController : Controller
     {
-        private QuanLyDeTaiEntities1 db = new QuanLyDeTaiEntities1();
+        private QuanLyDeTaiEntities db = new QuanLyDeTaiEntities();
 
         // GET: ChuyenNganhs
         public ActionResult Index()
