@@ -72,6 +72,11 @@
                         @Html.ActionLink("Xóa", "Delete", new { id = item.maLoaiDeTai })
                     </td>
                 }
+                <td>
+                    <a href="@Url.Action("getListDeTaisByLoaiDeTai","DeTais", new {maLoaiDeTai = item.maLoaiDeTai})">
+                        Xem danh sách đề tài
+                    </a>
+                </td>
             </tr>
         </tbody>
     }

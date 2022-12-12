@@ -19,9 +19,10 @@ namespace QuanLyDeTai.Controllers
         private QuanLyDeTaiEntities db = new QuanLyDeTaiEntities();
 
         // GET: ThongBaos
-        public ActionResult Index()
+        public ActionResult Index(string role)
         {
             var thongBaos = db.ThongBaos.ToList();
+            ViewBag.Role = role;
             return View(thongBaos);
         }
 

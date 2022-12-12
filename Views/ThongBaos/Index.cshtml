@@ -5,16 +5,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (User.IsInRole("Admin"))
+@if (ViewBag.Role == "admin")
 {
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h2>Danh sách thông báo</h2>
 
-<p>
-    @Html.ActionLink("Tạo thông báo mới", "Create")
-</p>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Tạo thông báo mới", "Create")
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -27,17 +31,13 @@
             Mô tả
         </th>
         <th>
-            Nội dung
-        </th>
-        <th>
             Trạng thái
-        </th>
-        <th>
-            File đính kèm
         </th>
         <th>
             Ngày tạo
         </th>
+        <th></th>
+        <th></th>
         <th></th>
     </tr>
 
@@ -53,9 +53,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.moTa)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.noiDung)
-            </td>
             @if (item.trangThai == 1)
             {
                 <td>
@@ -68,17 +65,24 @@
                     Hết hiệu lực
                 </td>
             }
-            <td>
+            @*<td>
                 <a href="~/Upload/@item.fileDinhKem">@Html.DisplayFor(modelItem => item.fileDinhKem)</a>
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.ngayTao)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { maThongBao = item.maThongBao }) |
-                @Html.ActionLink("Details", "Details", new { id = item.maThongBao }) |
-                @Html.ActionLink("Delete", "XoaThongBao", new { id = item.maThongBao })
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.maThongBao })
             </td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    @Html.ActionLink("Chỉnh sửa", "Edit", new { maThongBao = item.maThongBao })
+                </td>
+                <td>
+                    @Html.ActionLink("Xóa", "XoaThongBao", new { id = item.maThongBao })
+                </td>
+            }
         </tr>
     }
 

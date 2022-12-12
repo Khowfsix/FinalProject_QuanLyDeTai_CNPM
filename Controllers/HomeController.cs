@@ -10,7 +10,7 @@ namespace QuanLyDeTai.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "ThongBaos", new {role = "user"});
         }
 
         public ActionResult About()

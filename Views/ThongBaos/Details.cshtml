@@ -13,11 +13,11 @@
 <h2>Chi tiết thông báo</h2>
 
 <div>
-    <h4>ThongBao</h4>
+    <h4>Thông báo</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.tieuDe)
+            Tiêu đề
         </dt>
 
         <dd>
@@ -25,7 +25,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.moTa)
+            Mô tả
         </dt>
 
         <dd>
@@ -33,7 +33,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.noiDung)
+            Nội dung
         </dt>
 
         <dd>
@@ -41,15 +41,28 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.trangThai)
+            Trạng thái
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.trangThai)
-        </dd>
+        @*<dd>
+                @Html.DisplayFor(model => model.trangThai)
+            </dd>*@
+
+        @if (Model.trangThai == 1)
+        {
+            <dd>
+                Còn hiệu lực
+            </dd>
+        }
+        else
+        {
+            <dd>
+                Hết hiệu lực
+            </dd>
+        }
 
         <dt>
-            @Html.DisplayNameFor(model => model.ngayTao)
+            Ngày tạo
         </dt>
 
         <dd>
@@ -57,15 +70,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.fileDinhKem)
+            File đính kèm
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.fileDinhKem)
+            <a href="~/Upload/@Model.fileDinhKem">@Html.DisplayFor(model => model.fileDinhKem)</a>
         </dd>
 
+        @*<dd>
+                @Html.DisplayFor(model => model.fileDinhKem)
+            </dd>*@
+
         <dt>
-            @Html.DisplayNameFor(model => model.LoaiDeTai.tenLoaiDeTai)
+            Tên loại đề tài
         </dt>
 
         <dd>
@@ -75,6 +92,13 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.maThongBao }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if (User.IsInRole("Admin"))
+    {
+        <div>
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.maThongBao })
+        </div>
+    }
+    <div>
+        @Html.ActionLink("Trở về", "Index")
+    </div>
 </p>
