@@ -4,6 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (User.IsInRole("Admin"))
+{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
 <h2>HoiDongCham</h2>
 @using (Html.BeginForm("PhanHoiDong", "GiangViens", FormMethod.Post, new { @class = "form-inline" }))
 {

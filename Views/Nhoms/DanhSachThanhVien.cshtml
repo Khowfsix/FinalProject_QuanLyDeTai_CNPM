@@ -4,6 +4,12 @@
     ViewBag.Title = "Danh sách thành viên";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@if (User.IsInRole("Admin"))
+{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
 @using Microsoft.AspNet.Identity;
 <h2>Index</h2>
 

@@ -5,6 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (User.IsInRole("Admin"))
+{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
 <h2>Sửa thông báo</h2>
 
 
@@ -14,13 +19,13 @@
             @Html.AntiForgeryToken()
             <div class="form-group">
                 <label for="tieuDe">Tên tiêu đề</label>
-                <input type="text" class="form-control" name="tieuDe" id="tieuDe" placeholder="@Model.tieuDe" value="@Model.tieuDe" >
-                <input type="text" name="maThongBao" value="@Request.Params["maThongBao"]" hidden/>
+                <input type="text" class="form-control" name="tieuDe" id="tieuDe" placeholder="@Model.tieuDe" value="@Model.tieuDe">
+                <input type="text" name="maThongBao" value="@Request.Params["maThongBao"]" hidden />
             </div>
             <div class="form-group">
                 <label for="tieuDe">Loại đề tài</label>
-                <select class="custom-selectf form-control" name="loaiDeTai"  >
-                    <option value="@Model.maLoaiDeTai" selected >@Model.LoaiDeTai.tenLoaiDeTai</option>
+                <select class="custom-selectf form-control" name="loaiDeTai">
+                    <option value="@Model.maLoaiDeTai" selected>@Model.LoaiDeTai.tenLoaiDeTai</option>
                     @if (ViewData["loaiDeTai"] != null)
                     {
                         foreach (QuanLyDeTai.Models.LoaiDeTai loaiDeTai in (List<QuanLyDeTai.Models.LoaiDeTai>)ViewData["loaiDeTai"])
@@ -32,21 +37,21 @@
             </div>
             <div class="form-group">
                 <label for="moTa">Mô tả</label>
-                <input type="text" class="form-control" name="moTa" id="moTa" placeholder="@Model.moTa" value="@Model.moTa" >
+                <input type="text" class="form-control" name="moTa" id="moTa" placeholder="@Model.moTa" value="@Model.moTa">
             </div>
             <div class="form-group">
                 <label for="noiDung">Nội dung</label>
-                <textarea name="noiDung" id="noiDung" rows="3" class="form-control" placeholder="@Model.noiDung" value=""  ></textarea>
+                <textarea name="noiDung" id="noiDung" rows="3" class="form-control" placeholder="@Model.noiDung" value=""></textarea>
             </div>
             <div class="form-group">
-                <input type="radio" id="html" name="trangthai" value="1"  checked="@(Model.trangThai == 1 ? "checked" : "")">
+                <input type="radio" id="html" name="trangthai" value="1" checked="@(Model.trangThai == 1 ? "checked" : "")">
                 <label for="html">Hiệu lực</label><br>
-                <input type="radio" id="css" name="trangthai" value="0"  checked="@(Model.trangThai == 0 ? "checked" : "")">
+                <input type="radio" id="css" name="trangthai" value="0" checked="@(Model.trangThai == 0 ? "checked" : "")">
                 <label for="css">Hết hiệu lực</label><br>
             </div>
             <div class="form-group">
                 <label>File đính kèm</label>
-                <input type="file" class="form-control" name="file"  placeholder="@Model.fileDinhKem" value="@Model.noiDung"/>
+                <input type="file" class="form-control" name="file" placeholder="@Model.fileDinhKem" value="@Model.noiDung" />
             </div>
             <div class="form-group">
                 <div>

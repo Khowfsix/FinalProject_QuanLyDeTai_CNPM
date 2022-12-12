@@ -3,6 +3,12 @@
     ViewBag.Title = "Menu";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@if (User.IsInRole("Admin"))
+{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
 <!-- CSS only -->
 <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css'
       rel='stylesheet'>

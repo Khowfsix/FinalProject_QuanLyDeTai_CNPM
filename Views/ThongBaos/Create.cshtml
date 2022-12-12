@@ -4,6 +4,12 @@
     ViewBag.Title = "Tạo thông báo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@if (User.IsInRole("Admin"))
+{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
 <br />
 <br />
 <br />
@@ -20,7 +26,7 @@
                 <label for="tieuDe">Loại đề tài</label>
                 <select class="custom-selectf form-control" name="loaiDeTai" required>
                     <option selected>Chọn loại đề tài</option>
-                    @if (ViewData["loaiDeTai"]!=null)
+                    @if (ViewData["loaiDeTai"] != null)
                     {
                         foreach (QuanLyDeTai.Models.LoaiDeTai loaiDeTai in (List<QuanLyDeTai.Models.LoaiDeTai>)ViewData["loaiDeTai"])
                         {
