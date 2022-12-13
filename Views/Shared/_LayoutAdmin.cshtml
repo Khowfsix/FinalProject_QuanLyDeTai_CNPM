@@ -60,15 +60,23 @@
                     <li>
                         <a href="@Url.Action("Index","Home")"><img src="~/images/sidebar/house-icon.png" height="24" width="24" /> Trang chủ</a>
                     </li>
-                    <li>
-                        <a href="">
-                            Quản lý role
-                        </a>
-                    </li>
+                    @*<li>
+            <a href="">
+                Quản lý role
+            </a>
+        </li>
+
+        <li>
+            <a href="@Url.Action("Index", "LoaiDeTais")">
+                Quản lý người dùng
+            </a>
+        </li>*@
+
+
 
                     <li>
-                        <a href="@Url.Action("Index", "LoaiDeTais")">
-                            Quản lý người dùng
+                        <a href="@Url.Action("MenuAction", "DeTais")">
+                            Quản lý lượt đăng ký
                         </a>
                     </li>
 
@@ -96,11 +104,11 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a href="@Url.Action("Index", "LoaiDeTais")">
-                            Quản lý giảng viên - chuyên ngành
-                        </a>
-                    </li>
+                    @*<li>
+            <a href="@Url.Action("Index", "LoaiDeTais")">
+                Quản lý giảng viên - chuyên ngành
+            </a>
+        </li>*@
 
                     <li>
                         <a href="@Url.Action("Index", "GiangVienPhanBiens")">
@@ -129,6 +137,12 @@
                     <li>
                         <a href="@Url.Action("Index", "ThongBaos", new {role = "admin"})">
                             Quản lý thông báo
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="@Url.Action("Index", "Search")" />
+                        <img src="~/images/sidebar/Search-icon.png" height="24" width="24" /> Tìm kiếm
                         </a>
                     </li>
 

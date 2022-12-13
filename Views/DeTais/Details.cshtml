@@ -14,7 +14,7 @@
 
 <div>
     <h4>Chi tiết đề tài</h4>
-    @if (User.IsInRole("Sinh viên") && Model.truongNhom == null)
+    @if (User.IsInRole("Sinh viên") && Model.truongNhom == null && Model.LoaiDeTai1.tgKetThuc > DateTime.Today)
     {
         @Html.ActionLink("Đăng ký đề tài", "SinhVienDangKy", new { maDeTai = Model.maDeTai }, new { @class = "btn btn-primary", style = "font-size: 20px;" })
     }
@@ -137,15 +137,23 @@
 </div>
 <p>
     @{
-        if (User.IsInRole("Admin, Trưởng Bộ Môn"))
+        if (User.IsInRole("Giảng viên"))
         {
             if (Model.gvHuongDan == ViewBag.maGiangVien)
             {
                 <span> @Html.ActionLink("Sửa", "Edit", new { id = Model.maDeTai }, htmlAttributes: new { Style = "Color: Green" }) |</span>
                 <span> @Html.ActionLink("Xóa", "Delete", new { id = Model.maDeTai }, htmlAttributes: new { Style = "Color: Red" }) |</span>
             }
-
         }
+        else if (User.IsInRole("Admin"))
+        {
+            if (Model.gvHuongDan == ViewBag.maGiangVien)
+            {
+                <span> @Html.ActionLink("Sửa", "Edit", new { id = Model.maDeTai }, htmlAttributes: new { Style = "Color: Green" }) |</span>
+                <span> @Html.ActionLink("Xóa", "Delete", new { id = Model.maDeTai }, htmlAttributes: new { Style = "Color: Red" }) |</span>
+            }
+        }
+
     }
 
     @Html.ActionLink("Quay lại danh sách", "Index")

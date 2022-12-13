@@ -10,19 +10,26 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @*@Html.ActionLink("Phân giảng viên phản biện", "Create")*@
+    <a href="@Url.Action("PhanPhanBien","GiangViens")">Phân giảng viên phản biện</a>
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.maGiangVien)
+            @Html.DisplayNameFor(model => model.id)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DeTai.tenDeTai)
         </th>
+
+        <th>
+            Mã giảng viên
+        </th>
+
         <th></th>
     </tr>
 
@@ -30,16 +37,24 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.maGiangVien)
+                @Html.DisplayFor(modelItem => item.id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DeTai.tenDeTai)
             </td>
+            
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.maPhanBien }) |
-                @Html.ActionLink("Details", "Details", new { id = item.maPhanBien }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.maPhanBien })
+                @item.maGiangVien
             </td>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            }
         </tr>
     }
 

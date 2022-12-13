@@ -47,6 +47,7 @@ namespace QuanLyDeTai.Controllers
         {
             if (ModelState.IsValid)
             {
+                deTai.TrangThai = "Đang chờ duyệt";
                 db.DeTais.Add(deTai);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -111,7 +112,8 @@ namespace QuanLyDeTai.Controllers
 
             ViewBag.masinhvien = db.SinhViens.Where(p => p.account_ID == userId).First().MSSV;
             var deTais = db.DeTais.Include(d => d.ChuyenNganh).Include(d => d.LoaiDeTai1);
-            return View("Index", deTais.ToList());
+            //return View("Index", deTais.ToList());
+            return RedirectToAction("getListDeTaisByLoaiDeTai", "DeTais", new { maLoaiDeTai = maDeTai});
         }
         //GET: Menu Of Actions
         public ActionResult MenuAction()
@@ -123,7 +125,7 @@ namespace QuanLyDeTai.Controllers
         public ActionResult getListDeTaisByLoaiDeTai(int? maLoaiDeTai)
         {
             var userId = User.Identity.GetUserId();
-            var deTais = db.DeTais.Where(t => t.loaiDeTai == maLoaiDeTai).Include(d => d.ChuyenNganh).Include(d => d.LoaiDeTai1);
+            var deTais = db.DeTais.Where(t => t.loaiDeTai == maLoaiDeTai).Include(d => d.ChuyenNganh).Include(d => d.LoaiDeTai1).Where(d => !d.TrangThai.Equals("Đang chờ duyệt"));
             if (User.IsInRole("Giảng viên"))
                 ViewBag.maGiangVien = db.GiangViens.Where(p => p.account_ID == userId).First().maGiangVien;
             else if (User.IsInRole("Sinh viên"))

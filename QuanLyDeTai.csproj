@@ -444,11 +444,6 @@
     <Content Include="Views\Nhoms\Details.cshtml" />
     <Content Include="Views\Nhoms\Edit.cshtml" />
     <Content Include="Views\Nhoms\Index.cshtml" />
-    <Content Include="Views\GiangVienPhanBiens\Create.cshtml" />
-    <Content Include="Views\GiangVienPhanBiens\Delete.cshtml" />
-    <Content Include="Views\GiangVienPhanBiens\Details.cshtml" />
-    <Content Include="Views\GiangVienPhanBiens\Edit.cshtml" />
-    <Content Include="Views\GiangVienPhanBiens\Index.cshtml" />
     <Content Include="Views\HoiDongChams\Create.cshtml" />
     <Content Include="Views\HoiDongChams\Delete.cshtml" />
     <Content Include="Views\HoiDongChams\Details.cshtml" />
@@ -570,6 +565,11 @@
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\GiangVienPhanBiens\Create.cshtml" />
+    <Content Include="Views\GiangVienPhanBiens\Delete.cshtml" />
+    <Content Include="Views\GiangVienPhanBiens\Details.cshtml" />
+    <Content Include="Views\GiangVienPhanBiens\Edit.cshtml" />
+    <Content Include="Views\GiangVienPhanBiens\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

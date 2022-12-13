@@ -42,7 +42,7 @@ namespace QuanLyDeTai.Controllers
             phanPhanBien.maGiangVien = maGiangVien;
             db.GiangVienPhanBiens.Add(phanPhanBien);
             db.SaveChanges();
-            return Redirect("PhanPhanBien");
+            return RedirectToAction("Index", "GiangVienPhanBiens");
         }
 
         public ActionResult PhanHoiDong()
@@ -53,6 +53,7 @@ namespace QuanLyDeTai.Controllers
             hoiDongCham.deTais = deTais.ToList();
             hoiDongCham.giangViens = giangViens.ToList();
             return View(hoiDongCham);
+            
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -65,7 +66,7 @@ namespace QuanLyDeTai.Controllers
             hoiDongCham.maGiangVien = maGiangVien;
             db.HoiDongChams.Add(hoiDongCham);
             db.SaveChanges();
-            return Redirect("PhanPhanBien");
+            return RedirectToAction("Index", "HoiDongs");
         }
         // GET: GiangViens/Details/5
         public ActionResult Details(string id)
